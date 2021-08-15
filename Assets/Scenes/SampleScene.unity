@@ -199,10 +199,10 @@ CharacterJoint:
   m_GameObject: {fileID: 121410860}
   m_ConnectedBody: {fileID: 1446296776}
   m_ConnectedArticulationBody: {fileID: 0}
-  m_Anchor: {x: 0, y: 0.01593715, z: 0}
+  m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.20132598, y: 0.21150084, z: 0.022065135}
+  m_ConnectedAnchor: {x: 0.20132598, y: 0.19556367, z: 0.022065135}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 1, z: 0}
   m_TwistLimitSpring:
@@ -746,6 +746,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -45
       objectReference: {fileID: 0}
+    - target: {fileID: -293098661729716684, guid: fb1b332be954326448acf79b833273f1, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5db1935c91e88c649802c68e8752e80b, type: 2}
     - target: {fileID: 919132149155446097, guid: fb1b332be954326448acf79b833273f1, type: 3}
       propertyPath: m_Name
       value: 15584_TableTennisPaddle_PenholdStyle_v1
@@ -828,14 +832,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -6534791943677341563, guid: dbd8c95a69ddd82469c3d0d1e6c38d90, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7f654761545a4fd4191229d791019b39, type: 2}
     - target: {fileID: 919132149155446097, guid: dbd8c95a69ddd82469c3d0d1e6c38d90, type: 3}
       propertyPath: m_Name
       value: delta_simplified
       objectReference: {fileID: 0}
+    - target: {fileID: 2086693349977194425, guid: dbd8c95a69ddd82469c3d0d1e6c38d90, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7f654761545a4fd4191229d791019b39, type: 2}
     - target: {fileID: 4531912228224351498, guid: dbd8c95a69ddd82469c3d0d1e6c38d90, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: ec847a32379d82e48951ac81b3d40a44, type: 2}
+    - target: {fileID: 5731811932602828559, guid: dbd8c95a69ddd82469c3d0d1e6c38d90, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: eded5a9e682d12e4f9570522696244fc, type: 2}
+    - target: {fileID: 6285652487949966482, guid: dbd8c95a69ddd82469c3d0d1e6c38d90, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7f654761545a4fd4191229d791019b39, type: 2}
     m_RemovedComponents:
     - {fileID: -1853094968961178454, guid: dbd8c95a69ddd82469c3d0d1e6c38d90, type: 3}
     - {fileID: -6722085885383957590, guid: dbd8c95a69ddd82469c3d0d1e6c38d90, type: 3}
@@ -1260,10 +1280,10 @@ CharacterJoint:
   m_GameObject: {fileID: 1290713338}
   m_ConnectedBody: {fileID: 1446296776}
   m_ConnectedArticulationBody: {fileID: 0}
-  m_Anchor: {x: 0, y: 0.009424686, z: 0}
+  m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.10038668, y: 0.2619996, z: 0.020923497}
+  m_ConnectedAnchor: {x: 0.10038668, y: 0.2525749, z: 0.020923542}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 1, z: 0}
   m_TwistLimitSpring:
