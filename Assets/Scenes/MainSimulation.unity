@@ -922,7 +922,8 @@ PrefabInstance:
       propertyPath: m_Convex
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7927252771213729047, guid: fb1b332be954326448acf79b833273f1, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: fb1b332be954326448acf79b833273f1, type: 3}
 --- !u!54 &877187257
 Rigidbody:
@@ -1216,10 +1217,10 @@ HingeJoint:
     spring: 0
     damper: 0
     targetPosition: 0
-  m_UseMotor: 0
+  m_UseMotor: 1
   m_Motor:
-    targetVelocity: 10
-    force: 5
+    targetVelocity: 25
+    force: 50
     freeSpin: 0
   m_UseLimits: 1
   m_Limits:
@@ -1246,7 +1247,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -1286,6 +1287,20 @@ Rigidbody:
   m_Interpolate: 2
   m_Constraints: 0
   m_CollisionDetection: 2
+--- !u!64 &1248720443
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1248720439}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4680140982439388660, guid: fb1b332be954326448acf79b833273f1, type: 3}
 --- !u!114 &1290713341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1387,11 +1402,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: afdf24496d27a304f89307a7eb99205b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.311
+      value: -0.059
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: afdf24496d27a304f89307a7eb99205b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.13
+      value: 2.027
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: afdf24496d27a304f89307a7eb99205b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1432,6 +1447,14 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: afdf24496d27a304f89307a7eb99205b, type: 3}
       propertyPath: m_Name
       value: PingPongBall
+      objectReference: {fileID: 0}
+    - target: {fileID: 1151388028547126963, guid: afdf24496d27a304f89307a7eb99205b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.037
+      objectReference: {fileID: 0}
+    - target: {fileID: 1151388028547126963, guid: afdf24496d27a304f89307a7eb99205b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 2699092741681021261, guid: afdf24496d27a304f89307a7eb99205b, type: 3}
       propertyPath: m_Convex
@@ -1829,7 +1852,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.020000001
+  m_Radius: 0.05
   m_Center: {x: -0.020008316, y: 0.020000001, z: 0.020000001}
 --- !u!54 &1859421921
 Rigidbody:
@@ -1847,6 +1870,20 @@ Rigidbody:
   m_Interpolate: 2
   m_Constraints: 0
   m_CollisionDetection: 2
+--- !u!114 &1859421922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1859421916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b16f38b0ef61c84cb643d4312b6e07a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 10
+  useTorque: 1
 --- !u!1001 &1916587772
 PrefabInstance:
   m_ObjectHideFlags: 0
