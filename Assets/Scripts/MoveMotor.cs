@@ -9,9 +9,14 @@ public class MoveMotor : MonoBehaviour
     // This two lists will hold the csv data
     private List<string> timeList = new List<string>();
     private List<string> angleList = new List<string>();
-
+    private List<string> velocity_x = new List<string>();
+    private List<string> velocity_y = new List<string>();
+    private List<string> velocity_z = new List<string>();
+   
     private int ang_cnt=0;
     private float y_angle = 0f;
+    
+    Rigidbody rb;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +28,7 @@ public class MoveMotor : MonoBehaviour
         String path_CSV3 = @"C:\Users\Sulaiman's PC\PingPongPlayingRobotSimulation\Assets\Scripts\Trajectory_LinCirLin_MaxAcc.csv_Teta_BSpline_Motor3.csv";
         String cur_path = "";
         String cur_g_obj = gameObject.name;
+        
 
         switch (cur_g_obj)
         {
@@ -67,6 +73,8 @@ public class MoveMotor : MonoBehaviour
             transform.eulerAngles = new Vector3(0f, y_angle, float.Parse(angleList[ang_cnt]));
             // Debug.Log(float.Parse(angleList[ang_cnt]).ToString());
             // Debug.Log("count: " + ang_cnt.ToString());
+            rb = GetComponent<Rigidbody>();
+            // Debug.Log(rb.name + ": | velocity: "+ rb.angularVelocity.ToString());
             ang_cnt++;
         }
         

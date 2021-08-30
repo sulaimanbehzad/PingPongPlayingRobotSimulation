@@ -929,7 +929,15 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 5db1935c91e88c649802c68e8752e80b, type: 2}
     - target: {fileID: 919132149155446097, guid: fb1b332be954326448acf79b833273f1, type: 3}
       propertyPath: m_Name
-      value: 15584_TableTennisPaddle_PenholdStyle_v1
+      value: racket
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fb1b332be954326448acf79b833273f1, type: 3}
+      propertyPath: m_TagString
+      value: racket
+      objectReference: {fileID: 0}
+    - target: {fileID: 7541684173732535937, guid: fb1b332be954326448acf79b833273f1, type: 3}
+      propertyPath: m_Name
+      value: default
       objectReference: {fileID: 0}
     - target: {fileID: 7927252771213729047, guid: fb1b332be954326448acf79b833273f1, type: 3}
       propertyPath: m_Convex
@@ -1357,6 +1365,11 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!1 &1428532926 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7541684173732535937, guid: fb1b332be954326448acf79b833273f1, type: 3}
+  m_PrefabInstance: {fileID: 731967153}
+  m_PrefabAsset: {fileID: 0}
 --- !u!54 &1446296776
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1908,7 +1921,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 2
   m_Constraints: 0
-  m_CollisionDetection: 2
+  m_CollisionDetection: 3
 --- !u!114 &1859421922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1921,8 +1934,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b16f38b0ef61c84cb643d4312b6e07a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
-  useTorque: 1
+  moveSpeed: 2
+  obj1: {fileID: 1859421916}
+  obj2: {fileID: 1428532926}
+  moveTowardsRacket: 1
 --- !u!1001 &1916587772
 PrefabInstance:
   m_ObjectHideFlags: 0
