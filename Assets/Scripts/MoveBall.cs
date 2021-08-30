@@ -2,11 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
+
+// using Random = System.Random;
 
 public class MoveBall : MonoBehaviour
 {
 	// public TextAsset coordinates;
-	public int moveSpeed;
+	public float moveSpeed;
 
 	public GameObject obj1;
 	public GameObject obj2;
@@ -22,16 +25,30 @@ public class MoveBall : MonoBehaviour
 		if (other.gameObject.CompareTag("racket"))
 		{
 			moveTowardsRacket = false;
-			Debug.Log("moveTowardsRacket false");
+			// Debug.Log("moveTowardsRacket false");
+			// wait 5 seconds before running the code below	
 			yield return new WaitForSeconds(5);
-			Vector3 randVect = new Vector3(UnityEngine.Random.Range(-1f, 0f), UnityEngine.Random.Range(2f, 3f),
+			// // change obj1's speed
+			moveSpeed = 2f;
+			Vector3 randVect = new Vector3(UnityEngine.Random.Range(-2f, -1.5f), UnityEngine.Random.Range(2f,2.13f),
 				UnityEngine.Random.Range(0f, 0.87f));
 			obj1.transform.position = randVect;
 			moveTowardsRacket = true;
-			Debug.Log("moveTowardsRacket true");
+			// Debug.Log("moveTowardsRacket true");
 
 			// new Vector3(-0.059f, 2.026f, 0.864f)	
+		} 
+		if (other.gameObject.CompareTag("table"))
+		{
+			// change obj1's speed
+			moveSpeed = Random.Range(2, 7);
+			Debug.Log("collided with table");
 		}
+	}
+
+	private void Update()
+	{
+		
 	}
 
 	void FixedUpdate()

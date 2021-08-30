@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - racket
+  - table
   layers:
   - Default
   - TransparentFX
