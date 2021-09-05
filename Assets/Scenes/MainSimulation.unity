@@ -123,6 +123,28 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &455996025 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1240260949482834911, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
+  m_PrefabInstance: {fileID: 2159233110720182518}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &455996026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 455996025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f7683a078d9d4f4f850e7762a8f8b20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agentParameters:
+    maxStep: 0
+  hasUpgradedFromAgentParameters: 1
+  MaxStep: 0
+  ball: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -872,6 +894,14 @@ PrefabInstance:
     - target: {fileID: 2159233110403161004, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
       propertyPath: m_CollisionDetection
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2159233110533812289, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
+      propertyPath: m_HighTwistLimit.limit
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2159233110699227963, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
+      propertyPath: m_LowTwistLimit.limit
+      value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 3309857963625738837, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
       propertyPath: m_IsKinematic
