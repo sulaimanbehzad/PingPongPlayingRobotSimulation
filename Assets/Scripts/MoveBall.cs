@@ -42,6 +42,7 @@ public class MoveBall : MonoBehaviour
 		gameObject.transform.position = randVect;
 		Vector3 direction = new Vector3(1, 0f, 0f);
 		rb1.AddForce(direction * forceCeof, ForceMode.Impulse);
+		// Debug.Log(rb1.name + ": | velocity: "+ rb1.angularVelocity);
 		// rb1.velocity = new Vector3(0, 0, 0);
 		// Instantiate(obj1, randVect, transform.rotation);
 		nextBall = false;

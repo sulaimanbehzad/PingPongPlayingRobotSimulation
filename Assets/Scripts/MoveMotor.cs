@@ -15,8 +15,16 @@ public class MoveMotor : MonoBehaviour
    
     private int ang_cnt=0;
     private float y_angle = 0f;
+    private Vector3 torque;
     
     Rigidbody rb;
+
+    private void Awake()
+    {
+        Debug.Log("Scale time is: " +  Time.timeScale);
+        Debug.Log("Delta time is: " +  Time.deltaTime);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -70,11 +78,21 @@ public class MoveMotor : MonoBehaviour
     {
         if (ang_cnt < angleList.Count)
         {
+            Vector3 oldPoint = transform.eulerAngles;
             transform.eulerAngles = new Vector3(0f, y_angle, float.Parse(angleList[ang_cnt]));
+            Vector3 newPoint = transform.eulerAngles;
+            Vector3 x = Vector3.Cross(oldPoint.normalized, newPoint.normalized);
+            float theta = Mathf.Asin(x.magnitude);
+            // Vector3 w = x.normalized * theta / (Time.timeScale * Time.fixedDeltaTime);
+            Vector3 w = x.normalized * theta / (0.001f);
+
             // Debug.Log(float.Parse(angleList[ang_cnt]).ToString());
             // Debug.Log("count: " + ang_cnt.ToString());
             rb = GetComponent<Rigidbody>();
-            // Debug.Log(rb.name + ": | velocity: "+ rb.angularVelocity.ToString());
+            Quaternion q = transform.rotation * rb.inertiaTensorRotation;
+            torque = q * Vector3.Scale(rb.inertiaTensor, (Quaternion.Inverse(q) * w));
+            Debug.Log(rb.name + "'s Torque: " + torque.ToString("F4") + " N*m.");
+            // Debug.Log(rb.name + ": | velocity: "+ rb.angularVelocity);
             ang_cnt++;
         }
         

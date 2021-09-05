@@ -833,5 +833,49 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2159233109164619159, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
+      propertyPath: m_Interpolate
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2159233109164619159, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2159233109164619159, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2159233109609689884, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
+      propertyPath: m_Interpolate
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2159233109609689884, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2159233109609689884, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2159233110310784314, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2159233110403161004, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
+      propertyPath: m_Interpolate
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2159233110403161004, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2159233110403161004, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3309857963625738837, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
