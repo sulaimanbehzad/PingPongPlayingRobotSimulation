@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using UnityEngine.UI;
 
 public class MoveMotor : MonoBehaviour
 {
@@ -16,9 +17,10 @@ public class MoveMotor : MonoBehaviour
     private int ang_cnt=0;
     private float y_angle = 0f;
     private Vector3 torque;
+
+    public GameObject torqueText;
     
     Rigidbody rb;
-
     private void Awake()
     {
         Debug.Log("Scale time is: " +  Time.timeScale);
@@ -91,10 +93,27 @@ public class MoveMotor : MonoBehaviour
             rb = GetComponent<Rigidbody>();
             Quaternion q = transform.rotation * rb.inertiaTensorRotation;
             torque = q * Vector3.Scale(rb.inertiaTensor, (Quaternion.Inverse(q) * w));
-            Debug.Log(rb.name + "'s Torque: " + torque.ToString("F4") + " N*m.");
+            // Debug.Log(rb.name + "'s Torque: " + torque.ToString("F4") + " N*m.");
+            torqueText.GetComponent<Text>().text = rb.name + "'s Torque: " + torque.ToString("F4") + " N*m.";
             // Debug.Log(rb.name + ": | velocity: "+ rb.angularVelocity);
             ang_cnt++;
         }
         
     }
+    // void OnGUI()
+    // {
+    //     GUI.contentColor = Color.black;
+    //     if (rb.name == "SL1")
+    //     {
+    //         GUI.Label(new Rect(800, 400, 100, 20), rb.name + "'s Torque: " +message+ " N*m.");
+    //     }
+    //     else if (rb.name == "SL2")
+    //     {
+    //         GUI.Label(new Rect(800, 450, 100, 20), rb.name + "'s Torque: " + torque.ToString("F4") + " N*m.");
+    //     }
+    //     else if (rb.name == "SL3")
+    //     {
+    //         GUI.Label(new Rect(800, 500, 100, 20), rb.name + "'s Torque: " + torque.ToString("F4") + " N*m.");
+    //     }
+    // }
 }
