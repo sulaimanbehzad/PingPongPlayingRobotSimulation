@@ -21,6 +21,7 @@ public class MoveMotor : MonoBehaviour
     public GameObject torqueText;
     
     Rigidbody rb;
+    
     private void Awake()
     {
         Debug.Log("Scale time is: " +  Time.timeScale);
