@@ -83,6 +83,7 @@ public class DeltaAgent : Agent
 
     public override void OnActionReceived(ActionBuffers actions)
     {
+        Debug.Log("action received");
         var actionSl1 = Mathf.Clamp(actions.ContinuousActions[0], -1f, 1f);
         var actionSl2 = Mathf.Clamp(actions.ContinuousActions[1], -1f, 1f);
         var actionSl3 = Mathf.Clamp(actions.ContinuousActions[2], -1f, 1f);
@@ -98,9 +99,11 @@ public class DeltaAgent : Agent
             (Mathf.Abs(ball.transform.position.x - racketGameObject.transform.position.x) < 0.05))
         {
             SetReward(0.1f);
+            EndEpisode();
         }
         else
         {
+            SetReward(-1f);
             EndEpisode();
         }
     }
@@ -113,14 +116,13 @@ public class DeltaAgent : Agent
      * the agent will run �Inference Only� as it uses the neural network to make decisions
      * When no neural network is provided, it will use �Heuristic Only.�
      */
-    /*
-    public override void Heuristic(ActionBuffers actionsOut)
-    {
-        actionsOut.ContinuousActions[0] = -Input.GetAxis("Horizontal");
-        actionsOut.ContinuousActions[1] = Input.GetAxis("Vertical");
-
-    }
-    */
+    
+    // public override void Heuristic(ActionBuffers actionsOut)
+    // {
+    //     actionsOut.ContinuousActions[0] = -Input.GetAxis("Horizontal");
+    //     actionsOut.ContinuousActions[1] = Input.GetAxis("Vertical");
+    //
+    // }
 
 
 
@@ -133,6 +135,7 @@ public class DeltaAgent : Agent
         _ballRb.mass = defaultParameters.GetWithDefault("mass", 1.0f);
         var scale = defaultParameters.GetWithDefault("scale", 1.0f);
         ball.transform.localScale = new Vector3(scale, scale, scale);
+        Debug.Log("end reset scene");
     }
 
     //this function resets the position and velocity of the ball, the rotation of the agent, 
@@ -153,10 +156,10 @@ public class DeltaAgent : Agent
 
           // _ballRb.velocity = new Vector3(0f, 0f, 0f);
           // ball.transform.position = new Vector3(Random.Range(-1.5f, 1.5f), 4f, Random.Range(-1.5f, 1.5f)) + gameObject.transform.position;
-          Vector3 randVect = new Vector3(UnityEngine.Random.Range(-2f, -1.5f), UnityEngine.Random.Range(2f,2.13f), UnityEngine.Random.Range(0f, 0.87f));
+          Vector3 randVect = new Vector3(UnityEngine.Random.Range(-1.5f, -0.9f), UnityEngine.Random.Range(2f,2.13f), UnityEngine.Random.Range(0f, 0.87f));
           ball.transform.position = randVect;
           Vector3 direction = new Vector3(1, 0f, 0f);
-          _ballRb.AddForce(direction * 0.01f, ForceMode.Impulse);
+          _ballRb.AddForce(direction * 2f, ForceMode.Impulse);
           i_cnt++;
           Debug.Log(i_cnt.ToString());
           ResetScene();
