@@ -4,6 +4,7 @@ using UnityEngine;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
+using Random = System.Random;
 
 public class DeltaAgent : Agent
 {
@@ -25,6 +26,7 @@ public class DeltaAgent : Agent
 
     private GameObject racketGameObject;
     private int i_cnt = 0;
+    public float rotationSpeed;
     public override void Initialize()
     {
         _ballRb = ball.GetComponent<Rigidbody>();
@@ -87,12 +89,21 @@ public class DeltaAgent : Agent
         var actionSl1 = Mathf.Clamp(actions.ContinuousActions[0], -1f, 1f);
         var actionSl2 = Mathf.Clamp(actions.ContinuousActions[1], -1f, 1f);
         var actionSl3 = Mathf.Clamp(actions.ContinuousActions[2], -1f, 1f);
-        
+
         // move servo motors using transform and angles in actions received
-        slGameObject1.transform.eulerAngles = new Vector3(0,180f,actionSl1);
-        slGameObject2.transform.eulerAngles = new Vector3(0,60f,actionSl2);
-        slGameObject3.transform.eulerAngles = new Vector3(0,-62f,actionSl3);
+        // slGameObject1.transform.eulerAngles = new Vector3(0,180f,actionSl1 * (rotationSpeed * Time.deltaTime));
+        // slGameObject2.transform.eulerAngles = new Vector3(0,60f,actionSl2 * (rotationSpeed * Time.deltaTime));
+        // slGameObject3.transform.eulerAngles = new Vector3(0,-62f,actionSl3 * (rotationSpeed * Time.deltaTime));
         
+        slGameObject1.transform.Rotate(new Vector3(0,0,actionSl1));
+        slGameObject2.transform.Rotate(new Vector3(0,0f,actionSl2));
+        slGameObject3.transform.Rotate(new Vector3(0,0f,actionSl3));
+        
+        // slGameObject1.GetComponent<Rigidbody>().AddTorque(new Vector3(0,0, actionSl1));
+        // slGameObject2.GetComponent<Rigidbody>().AddTorque(new Vector3(0,0, actionSl2));
+        // slGameObject3.GetComponent<Rigidbody>().AddTorque(new Vector3(0,0, actionSl3));
+
+
         // TODO: set reward
         if ((Mathf.Abs(ball.transform.position.x - racketGameObject.transform.position.x) < 0.05) &&
             (Mathf.Abs(ball.transform.position.x - racketGameObject.transform.position.x) < 0.05) &&
@@ -117,10 +128,12 @@ public class DeltaAgent : Agent
      * When no neural network is provided, it will use �Heuristic Only.�
      */
     
-    // public override void Heuristic(ActionBuffers actionsOut)
+    // public override void Heuristic(in ActionBuffers actionBuffers)
     // {
-    //     actionsOut.ContinuousActions[0] = -Input.GetAxis("Horizontal");
-    //     actionsOut.ContinuousActions[1] = Input.GetAxis("Vertical");
+    //     var continousActionsOut = actionBuffers.ContinuousActions;
+    //     continousActionsOut[0] = UnityEngine.Random.Range(-60f, 90f);
+    //     continousActionsOut[1] = UnityEngine.Random.Range(-60f, 90f);
+    //     continousActionsOut[3] = UnityEngine.Random.Range(-60f, 90f);
     //
     // }
 
@@ -142,18 +155,15 @@ public class DeltaAgent : Agent
     public override void OnEpisodeBegin()
     {
         // this part was copied from another project
-        slGameObject1.transform.rotation = new Quaternion(0f, 180f, 0f, 0f);
-        // slGameObject1.transform.Rotate(new Vector3(1, 0, 0), Random.Range(-1f, 1f));
-          slGameObject1.transform.eulerAngles = new Vector3(0, 180, Random.Range(-60f, 90f));
-          
-          slGameObject2.transform.rotation = new Quaternion(0f, 60f, 0f, 0f);
-          // // slGameObject2.transform.Rotate(new Vector3(1, 0, 0), Random.Range(-1f, 1f));
-          slGameObject2.transform.eulerAngles = new Vector3(0, 60, Random.Range(-60f, 90f));
-          
-          slGameObject3.transform.rotation = new Quaternion(0f, -62f, 0f, 0f);
-          // // slGameObject3.transform.Rotate(new Vector3(1, 0, 0), Random.Range(-1f, 1f));
-          slGameObject3.transform.eulerAngles = new Vector3(0, -62, Random.Range(-60f, 90f));
+        // slGameObject1.transform.rotation = new Quaternion(0f, 180f, 0f, 0f);
+        slGameObject1.transform.eulerAngles = new Vector3(0, 180f, 0);
 
+          // slGameObject2.transform.rotation = new Quaternion(0f, 60f, 0f, 0f);
+          slGameObject2.transform.eulerAngles = new Vector3(0, 60f, 0);
+
+          // slGameObject3.transform.rotation = new Quaternion(0f, -62f, 0f, 0f);
+          slGameObject3.transform.eulerAngles = new Vector3(0, -62, 0f);
+   
           // _ballRb.velocity = new Vector3(0f, 0f, 0f);
           // ball.transform.position = new Vector3(Random.Range(-1.5f, 1.5f), 4f, Random.Range(-1.5f, 1.5f)) + gameObject.transform.position;
           Vector3 randVect = new Vector3(UnityEngine.Random.Range(-1.5f, -0.9f), UnityEngine.Random.Range(2f,2.13f), UnityEngine.Random.Range(0f, 0.87f));

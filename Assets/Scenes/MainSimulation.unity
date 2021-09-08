@@ -150,6 +150,7 @@ MonoBehaviour:
   hasUpgradedFromAgentParameters: 1
   MaxStep: 1000
   ball: {fileID: 1859421916}
+  rotationSpeed: 5
 --- !u!114 &455996027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1390,7 +1391,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2159233108958374274, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
       propertyPath: m_UseGravity
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2159233108958374275, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
       propertyPath: m_ConnectedAnchor.x
@@ -1426,7 +1427,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2159233109089073662, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
       propertyPath: m_UseGravity
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2159233109099798640, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
       propertyPath: m_Mass
@@ -1434,7 +1435,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2159233109099798640, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
       propertyPath: m_UseGravity
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2159233109099798642, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
       propertyPath: m_ConnectedAnchor.x
@@ -1470,7 +1471,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2159233109164619159, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
       propertyPath: m_UseGravity
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2159233109164619159, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
       propertyPath: m_Interpolate
@@ -1482,11 +1483,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2159233109164619159, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
       propertyPath: m_CollisionDetection
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2159233109609689884, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
       propertyPath: m_UseGravity
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2159233109609689884, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
       propertyPath: m_Interpolate
@@ -1498,7 +1499,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2159233109609689884, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
       propertyPath: m_CollisionDetection
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2159233109609689885, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
       propertyPath: m_Enabled
@@ -1517,8 +1518,24 @@ PrefabInstance:
       value: 0.028999489
       objectReference: {fileID: 0}
     - target: {fileID: 2159233109851383887, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
+      propertyPath: m_Mass
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2159233109851383887, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
       propertyPath: m_UseGravity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2159233109851383887, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
+      propertyPath: m_Interpolate
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2159233109851383887, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
+      propertyPath: m_IsKinematic
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2159233109851383887, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2159233110310784314, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
       propertyPath: m_IsKinematic
@@ -1526,7 +1543,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2159233110403161004, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
       propertyPath: m_UseGravity
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2159233110403161004, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
       propertyPath: m_Interpolate
@@ -1538,7 +1555,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2159233110403161004, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
       propertyPath: m_CollisionDetection
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2159233110403161005, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
       propertyPath: m_Enabled
@@ -1582,7 +1599,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2159233110533812302, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
       propertyPath: m_UseGravity
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2159233110690482648, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
       propertyPath: m_Mass
@@ -1590,7 +1607,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2159233110690482648, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
       propertyPath: m_UseGravity
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2159233110690482649, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
       propertyPath: m_ConnectedAnchor.x
@@ -1610,7 +1627,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2159233110699227960, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
       propertyPath: m_UseGravity
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2159233110699227962, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
       propertyPath: m_ConnectedAnchor.x
