@@ -4,11 +4,13 @@ using UnityEngine;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
+using Unity.MLAgents.Policies;
+
 using Random = System.Random;
 
 public class DeltaAgent : Agent
 {
-    public GameObject ball;
+    private GameObject ball;
     private Rigidbody _ballRb;
 
     /*
@@ -29,13 +31,14 @@ public class DeltaAgent : Agent
     public float rotationSpeed;
     public override void Initialize()
     {
+        ball = GameObject.FindGameObjectsWithTag("ball")[0];
         _ballRb = ball.GetComponent<Rigidbody>();
         defaultParameters = Academy.Instance.EnvironmentParameters;
 
         slGameObject1 = GameObject.Find("SL1");
         slGameObject2 = GameObject.Find("SL2");
         slGameObject3 = GameObject.Find("SL3");
-        racketGameObject = GameObject.Find("racket");
+        racketGameObject = GameObject.FindGameObjectsWithTag("racket")[0];
         ResetScene();
     }
 
@@ -83,22 +86,35 @@ public class DeltaAgent : Agent
 
     }
 
+    float reverScaling(float x)
+    {
+        return (x + 1f) * 90f - 180f;
+    }
+
+    public override void Heuristic(in ActionBuffers actionsOut)
+    {
+        var continuousActionsOut = actionsOut.ContinuousActions;
+        continuousActionsOut[0] = UnityEngine.Random.Range(-1f, 1f);
+        continuousActionsOut[1] = UnityEngine.Random.Range(-1f, 1f);
+        continuousActionsOut[3] = UnityEngine.Random.Range(-1f, 1f);
+    }
+
     public override void OnActionReceived(ActionBuffers actions)
     {
         Debug.Log("action received");
-        var actionSl1 = Mathf.Clamp(actions.ContinuousActions[0], -1f, 1f);
-        var actionSl2 = Mathf.Clamp(actions.ContinuousActions[1], -1f, 1f);
-        var actionSl3 = Mathf.Clamp(actions.ContinuousActions[2], -1f, 1f);
+        var actionSl1 = reverScaling(Mathf.Clamp(actions.ContinuousActions[0], -1f, 1f));
+        var actionSl2 = reverScaling(Mathf.Clamp(actions.ContinuousActions[1], -1f, 1f));
+        var actionSl3 = reverScaling(Mathf.Clamp(actions.ContinuousActions[2], -1f, 1f));
 
         // move servo motors using transform and angles in actions received
         // slGameObject1.transform.eulerAngles = new Vector3(0,180f,actionSl1 * (rotationSpeed * Time.deltaTime));
         // slGameObject2.transform.eulerAngles = new Vector3(0,60f,actionSl2 * (rotationSpeed * Time.deltaTime));
         // slGameObject3.transform.eulerAngles = new Vector3(0,-62f,actionSl3 * (rotationSpeed * Time.deltaTime));
-        
-        slGameObject1.transform.Rotate(new Vector3(0,0,actionSl1));
-        slGameObject2.transform.Rotate(new Vector3(0,0f,actionSl2));
-        slGameObject3.transform.Rotate(new Vector3(0,0f,actionSl3));
-        
+
+        slGameObject1.transform.Rotate(new Vector3(0, 0, actionSl1));
+        slGameObject2.transform.Rotate(new Vector3(0, 0f, actionSl2));
+        slGameObject3.transform.Rotate(new Vector3(0, 0f, actionSl3));
+
         // slGameObject1.GetComponent<Rigidbody>().AddTorque(new Vector3(0,0, actionSl1));
         // slGameObject2.GetComponent<Rigidbody>().AddTorque(new Vector3(0,0, actionSl2));
         // slGameObject3.GetComponent<Rigidbody>().AddTorque(new Vector3(0,0, actionSl3));
