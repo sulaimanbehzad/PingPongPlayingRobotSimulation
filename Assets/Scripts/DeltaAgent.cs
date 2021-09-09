@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,19 +18,31 @@ public class DeltaAgent : Agent
      */
     EnvironmentParameters defaultParameters;
 
+    public GameObject sl1;
+    public GameObject sl2;
+    public GameObject sl3;
 
-    public Transform sl1;
+    private Rigidbody sl1_rb;
+    private Rigidbody sl2_rb;
+    private Rigidbody sl3_rb;
 
-    public Transform sl2;
-
-    public Transform sl3;
-
+    private Transform sl1_tr;
+    private Transform sl2_tr;
+    private Transform sl3_tr;
     public Transform racket;
+    public bool use_torque;
     private int i_cnt = 0;
-    public float rotationSpeed;
     public override void Initialize()
     {
         _ballRb = ball.GetComponent<Rigidbody>();
+        sl1_rb = sl1.GetComponent<Rigidbody>();
+        sl2_rb = sl2.GetComponent<Rigidbody>();
+        sl3_rb = sl3.GetComponent<Rigidbody>();
+
+        sl1_tr = sl1.GetComponent<Transform>();
+        sl2_tr = sl2.GetComponent<Transform>();
+        sl3_tr = sl3.GetComponent<Transform>();
+
         defaultParameters = Academy.Instance.EnvironmentParameters;
         ResetScene();
     }
@@ -39,13 +52,13 @@ public class DeltaAgent : Agent
     {
         // this part was copied from another project
         // slGameObject1.transform.rotation = new Quaternion(0f, 180f, 0f, 0f);
-        sl1.eulerAngles = new Vector3(0, 180f, 0);
+        sl1_tr.eulerAngles = new Vector3(0, 180f, 0);
 
         // slGameObject2.transform.rotation = new Quaternion(0f, 60f, 0f, 0f);
-        sl2.eulerAngles = new Vector3(0, 60f, 0);
+        sl2_tr.eulerAngles = new Vector3(0, 60f, 0);
 
         // slGameObject3.transform.rotation = new Quaternion(0f, -62f, 0f, 0f);
-        sl3.eulerAngles = new Vector3(0, -62, 0f);
+        sl3_tr.eulerAngles = new Vector3(0, -62, 0f);
    
         // _ballRb.velocity = new Vector3(0f, 0f, 0f);
         // ball.transform.position = new Vector3(Random.Range(-1.5f, 1.5f), 4f, Random.Range(-1.5f, 1.5f)) + gameObject.transform.position;
@@ -90,9 +103,9 @@ public class DeltaAgent : Agent
         sensor.AddObservation(ball.transform.position.z);
         
         // get robot servo motors angles
-        sensor.AddObservation(sl1.rotation.z);
-        sensor.AddObservation(sl2.rotation.z);
-        sensor.AddObservation(sl3.rotation.z);
+        sensor.AddObservation(sl1_tr.rotation.z);
+        sensor.AddObservation(sl2_tr.rotation.z);
+        sensor.AddObservation(sl3_tr.rotation.z);
 
         /*
          * sensor.AddObservation(ballRb.velocity);
@@ -102,46 +115,81 @@ public class DeltaAgent : Agent
 
 
     }
+
+    public float changeScale(float v,float min, float max, float newMin, float newMax)
+    {
+        float vP = ((((v - min) / (max - min)) * (newMax - newMin)) + newMin);
+        return vP;
+    }
     
     public override void OnActionReceived(ActionBuffers actions)
     {
         var i = -1;
-        Debug.Log("action received");
-        var actionSl1 = Mathf.Clamp(actions.ContinuousActions[++i], -60f, 90f);
-        var actionSl2 = Mathf.Clamp(actions.ContinuousActions[++i], -60f, 90f);
-        var actionSl3 = Mathf.Clamp(actions.ContinuousActions[++i], -60f, 90f);
-    
+        // Debug.Log("action received");
+        
+        // Debug.Log("action sl1_tr: " + actionSl1.ToString());
         // move servo motors using transform and angles in actions received
         // slGameObject1.transform.eulerAngles = new Vector3(0,180f,actionSl1 * (rotationSpeed * Time.deltaTime));
         // slGameObject2.transform.eulerAngles = new Vector3(0,60f,actionSl2 * (rotationSpeed * Time.deltaTime));
         // slGameObject3.transform.eulerAngles = new Vector3(0,-62f,actionSl3 * (rotationSpeed * Time.deltaTime));
         
-        sl1.Rotate(new Vector3(0,0,actionSl1));
-        sl2.Rotate(new Vector3(0,0f,actionSl2));
-        sl3.Rotate(new Vector3(0,0f,actionSl3));
-        
-        // slGameObject1.GetComponent<Rigidbody>().AddTorque(new Vector3(0,0, actionSl1));
-        // slGameObject2.GetComponent<Rigidbody>().AddTorque(new Vector3(0,0, actionSl2));
-        // slGameObject3.GetComponent<Rigidbody>().AddTorque(new Vector3(0,0, actionSl3));
-    
-    
-        // TODO: set reward
-        if ((Mathf.Abs(ball.transform.position.x - racket.position.x) < 0.05) &&
-            (Mathf.Abs(ball.transform.position.y - racket.position.y) < 0.05) &&
-            (Mathf.Abs(ball.transform.position.z - racket.position.z) < 0.05))
+        // sl1_tr.eulerAngles = new Vector3(0,180,actionSl1);
+        // sl2_tr.eulerAngles = new Vector3(0,60f,actionSl2);
+        // sl3_tr.eulerAngles = new Vector3(0,-62f,actionSl3);
+        if (use_torque)
         {
-            SetReward(0.1f);
+            var actionSl1 = changeScale(actions.ContinuousActions[++i], -1f, 1f, 1, 9);
+            var actionSl2 = changeScale(actions.ContinuousActions[++i], -1f, 1f, 1, 9);
+            var actionSl3 = changeScale(actions.ContinuousActions[++i], -1f, 1f, 1, 9);
+
+            sl1_rb.AddTorque(new Vector3(0, 0, actionSl1), ForceMode.Force);
+            sl2_rb.AddTorque(new Vector3(0, 0, actionSl2), ForceMode.Force);
+            sl3_rb.AddTorque(new Vector3(0, 0, actionSl3), ForceMode.Force);
+        }
+        else {
+            var actionSl1 = changeScale(actions.ContinuousActions[++i], -1f, 1f, -60, 90);
+            var actionSl2 = changeScale(actions.ContinuousActions[++i], -1f, 1f, -60, 90);
+            var actionSl3 = changeScale(actions.ContinuousActions[++i], -1f, 1f, -60, 90);
+            
+            sl1_tr.eulerAngles = new Vector3(0,180,actionSl1);
+            sl2_tr.eulerAngles = new Vector3(0,60f,actionSl2);
+            sl3_tr.eulerAngles = new Vector3(0,-62f,actionSl3);
+        }
+
+        // // TODO: set reward
+        // if ((Mathf.Abs(ball.transform.position.x - racket.position.x) < 0.05) &&
+        //     (Mathf.Abs(ball.transform.position.y - racket.position.y) < 0.05) &&
+        //     (Mathf.Abs(ball.transform.position.z - racket.position.z) < 0.05))
+        // {
+        //     SetReward(0.1f);
+        //     EndEpisode();
+        // }
+        // else
+        // {
+        //     SetReward(-1f);
+        //     EndEpisode();
+        // }
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.collider.tag == "racket")
+        {
+            Debug.Log("Racket");
+            SetReward(1f);
             EndEpisode();
         }
-        else
+        else if (other.collider.tag == "floor")
         {
+            Debug.Log("Floor");
             SetReward(-1f);
             EndEpisode();
         }
+        // else
+        // {
+        //     SetReward(-0.1f);
+        // }
     }
-
-
-
     /*
      * at the Behavior Parameters on the Agent 
      * �Behaviour Type� has three options, �Heuristic Only�, �default�, and �Inference Only�

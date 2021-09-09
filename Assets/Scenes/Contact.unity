@@ -141,6 +141,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 20
+  go: {fileID: 129701945}
 --- !u!54 &129701950
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -153,7 +154,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -611,7 +612,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5dbbe017fc70de14288f6b1493e582bd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.25
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5dbbe017fc70de14288f6b1493e582bd, type: 3}
       propertyPath: m_LocalPosition.z
