@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &127020883 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2159233110403161006, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
+  m_PrefabInstance: {fileID: 2159233110720182518}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &251603972 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7790892087516061985, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
@@ -148,8 +153,12 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 1000
+  MaxStep: 5000
   ball: {fileID: 1859421916}
+  sl1: {fileID: 626542511}
+  sl2: {fileID: 127020883}
+  sl3: {fileID: 873835311}
+  racket: {fileID: 1248720441}
   rotationSpeed: 5
 --- !u!114 &455996027
 MonoBehaviour:
@@ -181,6 +190,20 @@ MonoBehaviour:
   m_UseChildSensors: 1
   m_UseChildActuators: 1
   m_ObservableAttributeHandling: 0
+--- !u!114 &455996029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 455996025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a5c9d521e5ef4759a8246a07d52221e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DecisionPeriod: 5
+  TakeActionsBetweenDecisions: 1
 --- !u!1 &531800055
 GameObject:
   m_ObjectHideFlags: 0
@@ -284,6 +307,11 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!4 &626542511 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2159233109609689886, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
+  m_PrefabInstance: {fileID: 2159233110720182518}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -526,6 +554,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 834948440}
   m_CullTransparentMesh: 1
+--- !u!4 &873835311 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2159233109164619177, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
+  m_PrefabInstance: {fileID: 2159233110720182518}
+  m_PrefabAsset: {fileID: 0}
 --- !u!54 &877187257 stripped
 Rigidbody:
   m_CorrespondingSourceObject: {fileID: 2159233109851383887, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
@@ -934,6 +967,11 @@ FixedJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!4 &1248720441 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: fb1b332be954326448acf79b833273f1, type: 3}
+  m_PrefabInstance: {fileID: 731967153}
+  m_PrefabAsset: {fileID: 0}
 --- !u!54 &1248720442
 Rigidbody:
   m_ObjectHideFlags: 0

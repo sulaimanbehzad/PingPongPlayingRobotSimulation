@@ -4,7 +4,7 @@ using UnityEngine;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
-using Random = System.Random;
+using Random = UnityEngine.Random;
 
 public class DeltaAgent : Agent
 {
@@ -18,25 +18,45 @@ public class DeltaAgent : Agent
     EnvironmentParameters defaultParameters;
 
 
-    private GameObject slGameObject1;
+    public Transform sl1;
 
-    private GameObject slGameObject2;
+    public Transform sl2;
 
-    private GameObject slGameObject3;
+    public Transform sl3;
 
-    private GameObject racketGameObject;
+    public Transform racket;
     private int i_cnt = 0;
     public float rotationSpeed;
     public override void Initialize()
     {
         _ballRb = ball.GetComponent<Rigidbody>();
         defaultParameters = Academy.Instance.EnvironmentParameters;
-
-        slGameObject1 = GameObject.Find("SL1");
-        slGameObject2 = GameObject.Find("SL2");
-        slGameObject3 = GameObject.Find("SL3");
-        racketGameObject = GameObject.Find("racket");
         ResetScene();
+    }
+
+    //this function resets the position and velocity of the ball, the rotation of the agent, 
+    public override void OnEpisodeBegin()
+    {
+        // this part was copied from another project
+        // slGameObject1.transform.rotation = new Quaternion(0f, 180f, 0f, 0f);
+        sl1.eulerAngles = new Vector3(0, 180f, 0);
+
+        // slGameObject2.transform.rotation = new Quaternion(0f, 60f, 0f, 0f);
+        sl2.eulerAngles = new Vector3(0, 60f, 0);
+
+        // slGameObject3.transform.rotation = new Quaternion(0f, -62f, 0f, 0f);
+        sl3.eulerAngles = new Vector3(0, -62, 0f);
+   
+        // _ballRb.velocity = new Vector3(0f, 0f, 0f);
+        // ball.transform.position = new Vector3(Random.Range(-1.5f, 1.5f), 4f, Random.Range(-1.5f, 1.5f)) + gameObject.transform.position;
+        Vector3 randVect = new Vector3(UnityEngine.Random.Range(-1.5f, -0.9f), UnityEngine.Random.Range(2f,2.13f), UnityEngine.Random.Range(0f, 0.87f));
+        ball.transform.position = randVect;
+        Vector3 direction = new Vector3(1, 0f, 0f);
+        _ballRb.AddForce(direction * 1f, ForceMode.Impulse);
+        i_cnt++;
+        Debug.Log(i_cnt.ToString());
+        ResetScene();
+          
     }
 
 
@@ -70,9 +90,9 @@ public class DeltaAgent : Agent
         sensor.AddObservation(ball.transform.position.z);
         
         // get robot servo motors angles
-        sensor.AddObservation(slGameObject1.transform.rotation.z);
-        sensor.AddObservation(slGameObject2.transform.rotation.z);
-        sensor.AddObservation(slGameObject3.transform.rotation.z);
+        sensor.AddObservation(sl1.rotation.z);
+        sensor.AddObservation(sl2.rotation.z);
+        sensor.AddObservation(sl3.rotation.z);
 
         /*
          * sensor.AddObservation(ballRb.velocity);
@@ -82,32 +102,33 @@ public class DeltaAgent : Agent
 
 
     }
-
+    
     public override void OnActionReceived(ActionBuffers actions)
     {
+        var i = -1;
         Debug.Log("action received");
-        var actionSl1 = Mathf.Clamp(actions.ContinuousActions[0], -1f, 1f);
-        var actionSl2 = Mathf.Clamp(actions.ContinuousActions[1], -1f, 1f);
-        var actionSl3 = Mathf.Clamp(actions.ContinuousActions[2], -1f, 1f);
-
+        var actionSl1 = Mathf.Clamp(actions.ContinuousActions[++i], -60f, 90f);
+        var actionSl2 = Mathf.Clamp(actions.ContinuousActions[++i], -60f, 90f);
+        var actionSl3 = Mathf.Clamp(actions.ContinuousActions[++i], -60f, 90f);
+    
         // move servo motors using transform and angles in actions received
         // slGameObject1.transform.eulerAngles = new Vector3(0,180f,actionSl1 * (rotationSpeed * Time.deltaTime));
         // slGameObject2.transform.eulerAngles = new Vector3(0,60f,actionSl2 * (rotationSpeed * Time.deltaTime));
         // slGameObject3.transform.eulerAngles = new Vector3(0,-62f,actionSl3 * (rotationSpeed * Time.deltaTime));
         
-        slGameObject1.transform.Rotate(new Vector3(0,0,actionSl1));
-        slGameObject2.transform.Rotate(new Vector3(0,0f,actionSl2));
-        slGameObject3.transform.Rotate(new Vector3(0,0f,actionSl3));
+        sl1.Rotate(new Vector3(0,0,actionSl1));
+        sl2.Rotate(new Vector3(0,0f,actionSl2));
+        sl3.Rotate(new Vector3(0,0f,actionSl3));
         
         // slGameObject1.GetComponent<Rigidbody>().AddTorque(new Vector3(0,0, actionSl1));
         // slGameObject2.GetComponent<Rigidbody>().AddTorque(new Vector3(0,0, actionSl2));
         // slGameObject3.GetComponent<Rigidbody>().AddTorque(new Vector3(0,0, actionSl3));
-
-
+    
+    
         // TODO: set reward
-        if ((Mathf.Abs(ball.transform.position.x - racketGameObject.transform.position.x) < 0.05) &&
-            (Mathf.Abs(ball.transform.position.x - racketGameObject.transform.position.x) < 0.05) &&
-            (Mathf.Abs(ball.transform.position.x - racketGameObject.transform.position.x) < 0.05))
+        if ((Mathf.Abs(ball.transform.position.x - racket.position.x) < 0.05) &&
+            (Mathf.Abs(ball.transform.position.y - racket.position.y) < 0.05) &&
+            (Mathf.Abs(ball.transform.position.z - racket.position.z) < 0.05))
         {
             SetReward(0.1f);
             EndEpisode();
@@ -151,29 +172,5 @@ public class DeltaAgent : Agent
         Debug.Log("end reset scene");
     }
 
-    //this function resets the position and velocity of the ball, the rotation of the agent, 
-    public override void OnEpisodeBegin()
-    {
-        // this part was copied from another project
-        // slGameObject1.transform.rotation = new Quaternion(0f, 180f, 0f, 0f);
-        slGameObject1.transform.eulerAngles = new Vector3(0, 180f, 0);
-
-          // slGameObject2.transform.rotation = new Quaternion(0f, 60f, 0f, 0f);
-          slGameObject2.transform.eulerAngles = new Vector3(0, 60f, 0);
-
-          // slGameObject3.transform.rotation = new Quaternion(0f, -62f, 0f, 0f);
-          slGameObject3.transform.eulerAngles = new Vector3(0, -62, 0f);
-   
-          // _ballRb.velocity = new Vector3(0f, 0f, 0f);
-          // ball.transform.position = new Vector3(Random.Range(-1.5f, 1.5f), 4f, Random.Range(-1.5f, 1.5f)) + gameObject.transform.position;
-          Vector3 randVect = new Vector3(UnityEngine.Random.Range(-1.5f, -0.9f), UnityEngine.Random.Range(2f,2.13f), UnityEngine.Random.Range(0f, 0.87f));
-          ball.transform.position = randVect;
-          Vector3 direction = new Vector3(1, 0f, 0f);
-          _ballRb.AddForce(direction * 2f, ForceMode.Impulse);
-          i_cnt++;
-          Debug.Log(i_cnt.ToString());
-          ResetScene();
-          
-    }
     
 }
