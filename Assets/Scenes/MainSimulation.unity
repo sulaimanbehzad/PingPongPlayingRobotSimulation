@@ -979,7 +979,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1859421916}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6f7683a078d9d4f4f850e7762a8f8b20, type: 3}
   m_Name: 
@@ -1286,6 +1286,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1179960295}
     - target: {fileID: 2159233109273887806, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
+      propertyPath: m_Constraints
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 2159233109273887806, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
       propertyPath: m_IsKinematic
       value: 0
       objectReference: {fileID: 0}
@@ -1294,6 +1298,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2028678785}
     - target: {fileID: 2159233110310784314, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
+      propertyPath: m_Constraints
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 2159233110310784314, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
       propertyPath: m_IsKinematic
       value: 0
       objectReference: {fileID: 0}
@@ -1301,6 +1309,14 @@ PrefabInstance:
       propertyPath: torqueText
       value: 
       objectReference: {fileID: 2078945803}
+    - target: {fileID: 2159233110690482651, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
+      propertyPath: m_ConnectedArticulationBody
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3309857963625738837, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
+      propertyPath: m_Constraints
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 3309857963625738837, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
       propertyPath: m_IsKinematic
       value: 0
