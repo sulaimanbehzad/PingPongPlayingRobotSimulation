@@ -1199,7 +1199,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1859421916}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6f7683a078d9d4f4f850e7762a8f8b20, type: 3}
   m_Name: 
@@ -1694,7 +1694,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2159233109164619156, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2159233109164619156, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
       propertyPath: torqueText
@@ -1707,6 +1707,10 @@ PrefabInstance:
     - target: {fileID: 2159233109164619158, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
       propertyPath: m_ConnectedAnchor.z
       value: 0.029245768
+      objectReference: {fileID: 0}
+    - target: {fileID: 2159233109164619158, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
+      propertyPath: m_EnablePreprocessing
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2159233109164619159, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
       propertyPath: m_UseGravity
@@ -1742,7 +1746,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2159233109609689885, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2159233109609689885, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
       propertyPath: torqueText
@@ -1755,6 +1759,10 @@ PrefabInstance:
     - target: {fileID: 2159233109609689887, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
       propertyPath: m_ConnectedAnchor.z
       value: 0.028999489
+      objectReference: {fileID: 0}
+    - target: {fileID: 2159233109609689887, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
+      propertyPath: m_EnablePreprocessing
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2159233109851383887, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
       propertyPath: m_Mass
@@ -1798,7 +1806,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2159233110403161005, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2159233110403161005, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
       propertyPath: torqueText
@@ -1811,6 +1819,10 @@ PrefabInstance:
     - target: {fileID: 2159233110403161007, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
       propertyPath: m_ConnectedAnchor.z
       value: 0.027883206
+      objectReference: {fileID: 0}
+    - target: {fileID: 2159233110403161007, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
+      propertyPath: m_EnablePreprocessing
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2159233110429204515, guid: 8a0936f4ef978b94f9216be0597e82ce, type: 3}
       propertyPath: m_CollisionDetection
