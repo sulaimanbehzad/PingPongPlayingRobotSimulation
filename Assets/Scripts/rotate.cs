@@ -18,6 +18,6 @@ public class rotate : MonoBehaviour
     void FixedUpdate()
     {
         // rb.transform.Rotate(new Vector3(10 * rotationSpeed * Time.deltaTime, 0, 0));
-        rb.AddTorque(new Vector3(0,0, 10), ForceMode.Force);
+        rb.AddTorque(new Vector3(0,0, -10), ForceMode.Force);
     }
 }

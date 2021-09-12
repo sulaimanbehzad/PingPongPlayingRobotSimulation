@@ -31,6 +31,7 @@ public class DeltaAgent : Agent
     private Transform sl3_tr;
     public Transform racket;
     public bool use_torque;
+    public float ball_force_coef;
     private int i_cnt = 0;
     public override void Initialize()
     {
@@ -65,7 +66,7 @@ public class DeltaAgent : Agent
         Vector3 randVect = new Vector3(UnityEngine.Random.Range(-1.5f, -0.9f), UnityEngine.Random.Range(2f,2.13f), UnityEngine.Random.Range(0f, 0.87f));
         ball.transform.position = randVect;
         Vector3 direction = new Vector3(1, 0f, 0f);
-        _ballRb.AddForce(direction * 1f, ForceMode.Impulse);
+        _ballRb.AddForce(direction * ball_force_coef, ForceMode.Impulse);
         i_cnt++;
         Debug.Log(i_cnt.ToString());
         ResetScene();
@@ -138,9 +139,9 @@ public class DeltaAgent : Agent
         // sl3_tr.eulerAngles = new Vector3(0,-62f,actionSl3);
         if (use_torque)
         {
-            var actionSl1 = changeScale(actions.ContinuousActions[++i], -1f, 1f, 1, 9);
-            var actionSl2 = changeScale(actions.ContinuousActions[++i], -1f, 1f, 1, 9);
-            var actionSl3 = changeScale(actions.ContinuousActions[++i], -1f, 1f, 1, 9);
+            var actionSl1 = changeScale(actions.ContinuousActions[++i], -1f, 1f, 0, 2);
+            var actionSl2 = changeScale(actions.ContinuousActions[++i], -1f, 1f, 0, 2);
+            var actionSl3 = changeScale(actions.ContinuousActions[++i], -1f, 1f, 0, 2);
 
             sl1_rb.AddTorque(new Vector3(0, 0, actionSl1), ForceMode.Force);
             sl2_rb.AddTorque(new Vector3(0, 0, actionSl2), ForceMode.Force);
