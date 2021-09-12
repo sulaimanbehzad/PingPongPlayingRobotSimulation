@@ -24,7 +24,6 @@ public class MoveAllMotors : MonoBehaviour
     private float y_angle1 = 1800f;
     private float y_angle2 = 60f;
     private float y_angle3 = -62f;
-    private Vector3 torque;
     public GameObject sl1;
     public GameObject sl2;
     public GameObject sl3;
@@ -68,8 +67,16 @@ public class MoveAllMotors : MonoBehaviour
         rb = servo.GetComponent<Rigidbody>();
         hj = servo.GetComponent<HingeJoint>();
         tr = servo.GetComponent<Transform>();
-   
+        
+        Vector3 oldPoint = tr.eulerAngles;
         tr.eulerAngles = new Vector3(0f, y_angle, float.Parse(angleList[ang_cnt]));
+        Vector3 newPoint = tr.eulerAngles;
+        Vector3 x = Vector3.Cross(oldPoint.normalized, newPoint.normalized);
+        float theta = Mathf.Asin(x.magnitude);
+        // Vector3 w = x.normalized * theta / (Time.timeScale * Time.fixedDeltaTime);
+        Vector3 w = x.normalized * theta / Time.fixedDeltaTime;
+        Quaternion q = transform.rotation * rb.inertiaTensorRotation;
+        Vector3 torque = q * Vector3.Scale(rb.inertiaTensor, (Quaternion.Inverse(q) * w));
         Vector3 torque2 = hj.currentTorque;
         Debug.Log(rb.name + "'s Torque: " + torque2.ToString("F4") + " N*m.");
         Debug.Log(rb.name + "current angle: " + angleList[ang_cnt].ToString());
