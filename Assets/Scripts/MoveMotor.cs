@@ -160,8 +160,8 @@ public class MoveMotor : MonoBehaviour
     //         GUI.Label(new Rect(800, 500, 100, 20), rb.name + "'s Torque: " + torque.ToString("F4") + " N*m.");
     //     }
     // }
-    private void OnApplicationQuit()
-    {
-        saveToFile();
-    }
+    // private void OnApplicationQuit()
+    // {
+    //     saveToFile();
+    // }
 }
