@@ -4,8 +4,15 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - racket
   - table
+  - floor
+  - wall
+  - net
+  - ball
+  - court_A
+  - court_B
+  - racket_A
+  - racket_B
   layers:
   - Default
   - TransparentFX
