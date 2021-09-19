@@ -24,6 +24,7 @@ public class MoveBall : MonoBehaviour
 	{
 	
 	}
+	
 	void FixedUpdate()
 	{
 		if (!nextBall)

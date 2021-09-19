@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using System.Text;
 using UnityEngine.UI;
 
 public class MoveMotor : MonoBehaviour
@@ -10,10 +11,10 @@ public class MoveMotor : MonoBehaviour
     // This two lists will hold the csv data
     private List<string> timeList = new List<string>();
     private List<string> angleList = new List<string>();
-    private List<string> velocity_x = new List<string>();
-    private List<string> velocity_y = new List<string>();
-    private List<string> velocity_z = new List<string>();
-   
+    private List<string> torqueList = new List<string>();
+    private List<string> torqueTimeList = new List<string>();
+
+
     private int ang_cnt=0;
     private float y_angle = 0f;
     private Vector3 torque;
@@ -21,11 +22,13 @@ public class MoveMotor : MonoBehaviour
     public GameObject torqueText;
     
     Rigidbody rb;
-    
+
+    private HingeJoint hj;
     private void Awake()
     {
         Debug.Log("Scale time is: " +  Time.timeScale);
         Debug.Log("Delta time is: " +  Time.deltaTime);
+        hj = gameObject.GetComponent<HingeJoint>();
     }
 
     // Start is called before the first frame update
@@ -95,11 +98,51 @@ public class MoveMotor : MonoBehaviour
             Quaternion q = transform.rotation * rb.inertiaTensorRotation;
             torque = q * Vector3.Scale(rb.inertiaTensor, (Quaternion.Inverse(q) * w));
             // Debug.Log(rb.name + "'s Torque: " + torque.ToString("F4") + " N*m.");
-            torqueText.GetComponent<Text>().text = rb.name + "'s Torque: " + torque.ToString("F4") + " N*m.";
+            Vector3 torque2 = hj.currentTorque;
+            torqueTimeList.Add(Time.time.ToString());
+            torqueList.Add(torque2.ToString("F4"));
+            torqueText.GetComponent<Text>().text = rb.name + "'s Torque: " + torque2.ToString("F4") + " N*m.";
             // Debug.Log(rb.name + ": | velocity: "+ rb.angularVelocity);
             ang_cnt++;
         }
         
+    }
+    public string ToCSV()
+    {
+        var sb = new StringBuilder("Time,Value");
+        for(int i=0; i<torqueList.Count; i++)
+        {
+            sb.Append('\n').Append(torqueTimeList[i]).Append(',').Append(torqueList[i]);
+        }
+
+        return sb.ToString();
+    }
+    public void saveToFile()
+    {
+        var content = ToCSV();
+        var folder = Application.streamingAssetsPath;
+
+        if (!Directory.Exists(folder))
+        {
+            Directory.CreateDirectory(folder);
+            
+        }
+        // else
+        // {
+        //     var folder = Application.persistentDataPath;
+        // }
+
+        var filePath = Path.Combine(folder, "export.csv");
+
+        using(var writer = new StreamWriter(filePath, false))
+        {
+            writer.Write(content);
+        }
+
+        // Or just
+        //File.WriteAllText(content);
+
+        Debug.Log($"CSV file written to \"{filePath}\"");
     }
     // void OnGUI()
     // {
@@ -116,5 +159,9 @@ public class MoveMotor : MonoBehaviour
     //     {
     //         GUI.Label(new Rect(800, 500, 100, 20), rb.name + "'s Torque: " + torque.ToString("F4") + " N*m.");
     //     }
+    // }
+    // private void OnApplicationQuit()
+    // {
+    //     saveToFile();
     // }
 }
