@@ -10,7 +10,7 @@ public class CenterOfMassFixer : MonoBehaviour
     
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        rb = gameObject.GetComponent<Rigidbody>();
         rb.centerOfMass = com;
     }
 

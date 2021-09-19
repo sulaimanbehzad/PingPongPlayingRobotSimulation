@@ -61,7 +61,7 @@ public class DeltaAgent : Agent
         // slGameObject3.transform.rotation = new Quaternion(0f, -62f, 0f, 0f);
         sl3_tr.eulerAngles = new Vector3(0, -62, 0f);
    
-        // _ballRb.velocity = new Vector3(0f, 0f, 0f);
+       
         // ball.transform.position = new Vector3(Random.Range(-1.5f, 1.5f), 4f, Random.Range(-1.5f, 1.5f)) + gameObject.transform.position;
         Vector3 randVect = new Vector3(UnityEngine.Random.Range(-1.5f, -0.9f), UnityEngine.Random.Range(2f,2.13f), UnityEngine.Random.Range(0f, 0.87f));
         ball.transform.position = randVect;
@@ -95,9 +95,9 @@ public class DeltaAgent : Agent
     {
 
         // get ball position and rotation values
-        sensor.AddObservation(ball.transform.rotation.x);
-        sensor.AddObservation(ball.transform.rotation.y);
-        sensor.AddObservation(ball.transform.rotation.z);
+        // sensor.AddObservation(ball.transform.rotation.x);
+        // sensor.AddObservation(ball.transform.rotation.y);
+        // sensor.AddObservation(ball.transform.rotation.z);
         
         sensor.AddObservation(ball.transform.position.x);
         sensor.AddObservation(ball.transform.position.y);
@@ -127,7 +127,7 @@ public class DeltaAgent : Agent
     {
         var i = -1;
         // Debug.Log("action received");
-        
+        // actions.d
         // Debug.Log("action sl1_tr: " + actionSl1.ToString());
         // move servo motors using transform and angles in actions received
         // slGameObject1.transform.eulerAngles = new Vector3(0,180f,actionSl1 * (rotationSpeed * Time.deltaTime));
@@ -137,6 +137,7 @@ public class DeltaAgent : Agent
         // sl1_tr.eulerAngles = new Vector3(0,180,actionSl1);
         // sl2_tr.eulerAngles = new Vector3(0,60f,actionSl2);
         // sl3_tr.eulerAngles = new Vector3(0,-62f,actionSl3);
+        // TODO: add 16 primitive actions
         if (use_torque)
         {
             var actionSl1 = changeScale(actions.ContinuousActions[++i], -1f, 1f, 0, 2);
@@ -155,6 +156,7 @@ public class DeltaAgent : Agent
             sl1_tr.eulerAngles = new Vector3(0,180,actionSl1);
             sl2_tr.eulerAngles = new Vector3(0,60f,actionSl2);
             sl3_tr.eulerAngles = new Vector3(0,-62f,actionSl3);
+            
         }
 
         // // TODO: set reward
@@ -174,22 +176,24 @@ public class DeltaAgent : Agent
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.collider.tag == "racket")
+        // MaxStep end episode
+        // Or opponent side of table
+        if (other.collider.tag == "racket" || other.collider.tag == "opponent_side")
         {
             Debug.Log("Racket");
             SetReward(1f);
-            EndEpisode();
+            // EndEpisode();
         }
         else if (other.collider.tag == "floor")
         {
             Debug.Log("Floor");
-            SetReward(-1f);
+            SetReward(0f);
             EndEpisode();
         }
-        // else
-        // {
-        //     SetReward(-0.1f);
-        // }
+        else
+        {
+            SetReward(0);
+        }
     }
     /*
      * at the Behavior Parameters on the Agent 
@@ -215,6 +219,8 @@ public class DeltaAgent : Agent
      */
     void ResetScene()
     {
+        _ballRb.velocity = Vector3.zero;
+        _ballRb.angularVelocity = Vector3.zero;
         _ballRb.mass = defaultParameters.GetWithDefault("mass", 1.0f);
         var scale = defaultParameters.GetWithDefault("scale", 1.0f);
         ball.transform.localScale = new Vector3(scale, scale, scale);

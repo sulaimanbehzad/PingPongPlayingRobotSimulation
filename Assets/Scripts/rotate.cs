@@ -7,10 +7,13 @@ public class rotate : MonoBehaviour
     public int rotationSpeed;
     public GameObject go;
     private Rigidbody rb;
+
+    private HingeJoint hj;
     // Start is called before the first frame update
     void Start()
     { 
         rb = go.GetComponent<Rigidbody>();
+        hj = go.GetComponent<HingeJoint>();
         Debug.Log(rb.name);
     }
 
@@ -19,5 +22,6 @@ public class rotate : MonoBehaviour
     {
         // rb.transform.Rotate(new Vector3(10 * rotationSpeed * Time.deltaTime, 0, 0));
         rb.AddTorque(new Vector3(0,0, -10), ForceMode.Force);
+        Debug.Log(hj.currentTorque.x.ToString());
     }
 }

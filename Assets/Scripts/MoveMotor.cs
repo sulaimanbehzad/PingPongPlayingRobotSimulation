@@ -24,11 +24,13 @@ public class MoveMotor : MonoBehaviour
     Rigidbody rb;
 
     private HingeJoint hj;
+    private WheelCollider _wheelCollider;
     private void Awake()
     {
         Debug.Log("Scale time is: " +  Time.timeScale);
         Debug.Log("Delta time is: " +  Time.deltaTime);
         hj = gameObject.GetComponent<HingeJoint>();
+        _wheelCollider = gameObject.GetComponent<WheelCollider>();
     }
 
     // Start is called before the first frame update
@@ -37,9 +39,9 @@ public class MoveMotor : MonoBehaviour
         // reader object takes path as input
         // !!! path is system dependent
         // TODO: make path system independent
-        String path_CSV1 = @"C:\Users\Sulaiman's PC\PingPongPlayingRobotSimulation\Assets\Scripts\Trajectory_LinCirLin_MaxAcc.csv_Teta_BSpline_Motor1.csv";
-        String path_CSV2 = @"C:\Users\Sulaiman's PC\PingPongPlayingRobotSimulation\Assets\Scripts\Trajectory_LinCirLin_MaxAcc.csv_Teta_BSpline_Motor2.csv";
-        String path_CSV3 = @"C:\Users\Sulaiman's PC\PingPongPlayingRobotSimulation\Assets\Scripts\Trajectory_LinCirLin_MaxAcc.csv_Teta_BSpline_Motor3.csv";
+        String path_CSV1 = @"C:\Users\Sulaiman's PC\PingPongPlayingRobotSimulation\Assets\Scripts\theta1.csv";
+        String path_CSV2 = @"C:\Users\Sulaiman's PC\PingPongPlayingRobotSimulation\Assets\Scripts\theta2.csv";
+        String path_CSV3 = @"C:\Users\Sulaiman's PC\PingPongPlayingRobotSimulation\Assets\Scripts\theta3.csv";
         String cur_path = "";
         String cur_g_obj = gameObject.name;
         
@@ -67,8 +69,8 @@ public class MoveMotor : MonoBehaviour
                 var line = reader.ReadLine();
                 var values = line.Split(',');
 
-                timeList.Add(values[0]);
-                angleList.Add(values[1]);
+                angleList.Add(values[0]);
+                // angleList.Add(values[1]);
                 // Debug.Log("value 0");
                 // Debug.Log(values[0].ToString());
                 // Debug.Log("value 1");
@@ -79,43 +81,57 @@ public class MoveMotor : MonoBehaviour
         // Debug.Log(timeList.Count.ToString());
     }
 
+    private float stepAngle = 0;
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (ang_cnt < angleList.Count)
-        {
+        // if (ang_cnt < angleList.Count)
+        // {
             Vector3 oldPoint = transform.eulerAngles;
-            transform.eulerAngles = new Vector3(0f, y_angle, float.Parse(angleList[ang_cnt]));
+            stepAngle -= 0.01f;
+            transform.eulerAngles = new Vector3(0f, y_angle, stepAngle);
             Vector3 newPoint = transform.eulerAngles;
             Vector3 x = Vector3.Cross(oldPoint.normalized, newPoint.normalized);
             float theta = Mathf.Asin(x.magnitude);
             // Vector3 w = x.normalized * theta / (Time.timeScale * Time.fixedDeltaTime);
-            Vector3 w = x.normalized * theta / (0.001f);
+            Vector3 w = x.normalized * theta / Time.fixedDeltaTime;
 
             // Debug.Log(float.Parse(angleList[ang_cnt]).ToString());
             // Debug.Log("count: " + ang_cnt.ToString());
             rb = GetComponent<Rigidbody>();
             Quaternion q = transform.rotation * rb.inertiaTensorRotation;
             torque = q * Vector3.Scale(rb.inertiaTensor, (Quaternion.Inverse(q) * w));
-            // Debug.Log(rb.name + "'s Torque: " + torque.ToString("F4") + " N*m.");
-            Vector3 torque2 = hj.currentTorque;
+            // Vector3 torque2 = hj.currentTorque
+            float torque3 = _wheelCollider.motorTorque;
+            Debug.Log(rb.name + "'s Torque: " + torque3.ToString("F4") + " N*m.");
             torqueTimeList.Add(Time.time.ToString());
-            torqueList.Add(torque2.ToString("F4"));
-            torqueText.GetComponent<Text>().text = rb.name + "'s Torque: " + torque2.ToString("F4") + " N*m.";
+            torqueList.Add(torque3.ToString("F4"));
+            torqueText.GetComponent<Text>().text = rb.name + "'s Torque: " + torque.ToString("F4") + " N*m.";
             // Debug.Log(rb.name + ": | velocity: "+ rb.angularVelocity);
             ang_cnt++;
-        }
+        // }
         
     }
     public string ToCSV()
     {
-        var sb = new StringBuilder("Time,Value");
+        var sb = new StringBuilder("Torque Z");
         for(int i=0; i<torqueList.Count; i++)
         {
-            sb.Append('\n').Append(torqueTimeList[i]).Append(',').Append(torqueList[i]);
+            torqueList[i] = removeChars(torqueList[i]);
+            sb.Append('\n').Append(torqueList[i]);
         }
 
         return sb.ToString();
+    }
+    public string removeChars(string in_str)
+    {
+        string[] charsToRemove;
+        charsToRemove = new[] {"(", ")"};
+        foreach (string c in charsToRemove)
+        {
+            in_str = in_str.Replace(c, string.Empty);
+        }
+        return in_str;
     }
     public void saveToFile()
     {
@@ -132,7 +148,7 @@ public class MoveMotor : MonoBehaviour
         //     var folder = Application.persistentDataPath;
         // }
 
-        var filePath = Path.Combine(folder, "export.csv");
+        var filePath = Path.Combine(folder, "export_"  + rb.name + ".csv");
 
         using(var writer = new StreamWriter(filePath, false))
         {
@@ -160,8 +176,8 @@ public class MoveMotor : MonoBehaviour
     //         GUI.Label(new Rect(800, 500, 100, 20), rb.name + "'s Torque: " + torque.ToString("F4") + " N*m.");
     //     }
     // }
-    // private void OnApplicationQuit()
-    // {
-    //     saveToFile();
-    // }
+    private void OnApplicationQuit()
+    {
+        saveToFile();
+    }
 }

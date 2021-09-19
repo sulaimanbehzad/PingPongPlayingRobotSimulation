@@ -21,23 +21,45 @@ public class MoveAllMotors : MonoBehaviour
 
 
     private int ang_cnt=0;
-    private float y_angle1 = 1800f;
-    private float y_angle2 = 60f;
-    private float y_angle3 = -62f;
+    private const float y_angle1 = 1800f;
+    private const float y_angle2 = 60f;
+    private const float y_angle3 = -62f;
     public GameObject sl1;
     public GameObject sl2;
     public GameObject sl3;
     public GameObject torqueText;
     
-    private Rigidbody rb;
-    private HingeJoint hj;
-    private Transform tr;
+    private Rigidbody sl1_rb;
+    private Rigidbody sl2_rb;
+    private Rigidbody sl3_rb;
+
+    private Transform sl1_tr;
+    private Transform sl2_tr;
+    private Transform sl3_tr;
+
+    private HingeJoint sl1_hj;
+    private HingeJoint sl2_hj;
+    private HingeJoint sl3_hj;
     private void Awake()
     {
         Debug.Log("Scale time is: " +  Time.timeScale);
         Debug.Log("Delta time is: " +  Time.fixedDeltaTime);
+        
+        sl1_rb = sl1.GetComponent<Rigidbody>();
+        sl2_rb = sl2.GetComponent<Rigidbody>();
+        sl3_rb = sl3.GetComponent<Rigidbody>();
+
+        sl1_tr = sl1.GetComponent<Transform>();
+        sl2_tr = sl2.GetComponent<Transform>();
+        sl3_tr = sl3.GetComponent<Transform>();
+
+        sl1_hj = sl1.GetComponent<HingeJoint>();
+        sl2_hj = sl2.GetComponent<HingeJoint>();
+        sl3_hj = sl3.GetComponent<HingeJoint>();
+
     }
 
+    
     private void ReadFromCSV()
     {
         using(var reader = new StreamReader(path_csv))
@@ -62,38 +84,35 @@ public class MoveAllMotors : MonoBehaviour
         Debug.Log(angleList1.Count + " | " + angleList2.Count + " | " +angleList3.Count);
     }
 
-    private IEnumerator MoveServoMotor(GameObject servo, List<string> angleList, float y_angle, List<string> torqueList)
+    private void MoveServoMotor(GameObject servo, List<string> angleList, float y_angle, List<string> torqueList, Rigidbody rb, Transform tr, HingeJoint hj)
     {
-        rb = servo.GetComponent<Rigidbody>();
-        hj = servo.GetComponent<HingeJoint>();
-        tr = servo.GetComponent<Transform>();
-        
-        Vector3 oldPoint = tr.eulerAngles;
-        tr.eulerAngles = new Vector3(0f, y_angle, float.Parse(angleList[ang_cnt]));
-        Vector3 newPoint = tr.eulerAngles;
-        Vector3 x = Vector3.Cross(oldPoint.normalized, newPoint.normalized);
-        float theta = Mathf.Asin(x.magnitude);
+
+        // Vector3 oldPoint = tr.eulerAngles;
+        sl1.transform.eulerAngles = new Vector3(0f, 0, 0);
+        // Vector3 newPoint = tr.eulerAngles;
+        // Vector3 x = Vector3.Cross(oldPoint.normalized, newPoint.normalized);
+        // float theta = Mathf.Asin(x.magnitude);
         // Vector3 w = x.normalized * theta / (Time.timeScale * Time.fixedDeltaTime);
-        Vector3 w = x.normalized * theta / Time.fixedDeltaTime;
-        Quaternion q = transform.rotation * rb.inertiaTensorRotation;
-        Vector3 torque = q * Vector3.Scale(rb.inertiaTensor, (Quaternion.Inverse(q) * w));
+        // Vector3 w = x.normalized * theta / Time.fixedDeltaTime;
+        // Quaternion q = transform.rotation * rb.inertiaTensorRotation;
+        // Vector3 torque = q * Vector3.Scale(rb.inertiaTensor, (Quaternion.Inverse(q) * w));
         Vector3 torque2 = hj.currentTorque;
         Debug.Log(rb.name + "'s Torque: " + torque2.ToString("F4") + " N*m.");
-        Debug.Log(rb.name + "current angle: " + angleList[ang_cnt].ToString());
+        Debug.Log(rb.name + "current angle: " + tr.eulerAngles.ToString());
         // torqueTimeList.Add(Time.time.ToString());
         torqueList.Add(torque2.ToString("F4"));
-        torqueText.GetComponent<Text>().text = rb.name + "'s Torque: " + torque2.ToString("F4") + " N*m.";
+        // torqueText.GetComponent<Text>().text = rb.name + "'s Torque: " + torque2.ToString("F4") + " N*m.";
         // Debug.Log(rb.name + ": | velocity: "+ rb.angularVelocity);
-        yield return new WaitForSeconds(10);
+        // yield return new WaitForSeconds(10);
     }
     // Update is called once per frame
     void FixedUpdate()
     {
         if (ang_cnt < angleList1.Count)
         {
-            StartCoroutine(MoveServoMotor(sl1, angleList1, y_angle1, torqueList1));
-            StartCoroutine(MoveServoMotor(sl2, angleList2, y_angle2, torqueList2));
-            StartCoroutine(MoveServoMotor(sl3, angleList3, y_angle3, torqueList3));
+            MoveServoMotor(sl1, angleList1, y_angle1, torqueList1, sl1_rb, sl1_tr, sl1_hj);
+            MoveServoMotor(sl2, angleList2, y_angle2, torqueList2, sl2_rb, sl2_tr, sl2_hj);
+            MoveServoMotor(sl3, angleList3, y_angle3, torqueList3, sl3_rb, sl3_tr, sl3_hj);
             ang_cnt++;
         }
 
@@ -153,7 +172,6 @@ public class MoveAllMotors : MonoBehaviour
     }
     private void OnApplicationQuit()
     {
-        StopAllCoroutines();
         saveToFile();
     }
 }
