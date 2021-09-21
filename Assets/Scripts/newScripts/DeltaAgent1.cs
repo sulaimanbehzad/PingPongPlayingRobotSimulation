@@ -167,19 +167,24 @@ public class DeltaAgent1 : Agent
 
     public override void OnActionReceived(ActionBuffers actions)
     {
+        
         var i = -1;
         if (use_torque)
+   
         {
             var actionSl1 = changeScale(actions.ContinuousActions[++i], -1f, 1f, 0, 2);
             var actionSl2 = changeScale(actions.ContinuousActions[++i], -1f, 1f, 0, 2);
             var actionSl3 = changeScale(actions.ContinuousActions[++i], -1f, 1f, 0, 2);
-
+            Debug.Log(opponent.name + actionSl1.ToString());
+            Debug.Log(opponent.name + actionSl2.ToString());
+            Debug.Log(opponent.name + actionSl3.ToString());
             sl1_rb.AddTorque(new Vector3(0, 0, actionSl1), ForceMode.Force);
             sl2_rb.AddTorque(new Vector3(0, 0, actionSl2), ForceMode.Force);
             sl3_rb.AddTorque(new Vector3(0, 0, actionSl3), ForceMode.Force);
         }
         else
         {
+            
             var actionSl1 = changeScale(actions.ContinuousActions[++i], -1f, 1f, -60, 90);
             var actionSl2 = changeScale(actions.ContinuousActions[++i], -1f, 1f, -60, 90);
             var actionSl3 = changeScale(actions.ContinuousActions[++i], -1f, 1f, -60, 90);
