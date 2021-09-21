@@ -99,6 +99,7 @@ public class Rule : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("racket_A"))
         {
+            Debug.Log("hit racket a");
             if (log.turn == 1) //agent_Aのターンなら
             {
                 if (log.hit == 0 && log.bound == 1)
@@ -118,11 +119,14 @@ public class Rule : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("racket_B"))
         {
+            Debug.Log("hit racket b");
+
             if (log.turn == 2) //agent_Bのターンなら
             {
                 if (log.hit == 0 && log.bound == 1)
                 {
                     log.hit = 1;
+                    Debug.Log("hit: " + log.hit.ToString());
                     log.bound = 0;
                 }
                 else if (log.last_succeeded_agent == 1)
@@ -138,6 +142,7 @@ public class Rule : MonoBehaviour
 
         if (collision.gameObject.CompareTag("court_A"))
         {
+            Debug.Log(("Court A"));
             if (log.turn == 1) //agent_Aのターンなら
             {
                 if (log.last_succeeded_agent == 2)
@@ -164,6 +169,7 @@ public class Rule : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("court_B"))
         {
+            Debug.Log("Court B");
             if (log.turn == 2) //agent_Bのターンなら
             {
                 if (log.last_succeeded_agent == 1)

@@ -1,23 +1,45 @@
 {
-    "My Behavior": {
+    "My Behavior_A": {
         "checkpoints": [
             {
-                "steps": 9289,
-                "file_path": "results\\run1\\My Behavior\\My Behavior-9289.onnx",
-                "reward": -0.9895104895104895,
-                "creation_time": 1631291216.8560586,
+                "steps": 592,
+                "file_path": "results\\run1\\My Behavior_A\\My Behavior_A-592.onnx",
+                "reward": -0.08163265306122448,
+                "creation_time": 1632211810.2532926,
                 "auxillary_file_paths": [
-                    "results\\run1\\My Behavior\\My Behavior-9289.pt"
+                    "results\\run1\\My Behavior_A\\My Behavior_A-592.pt"
                 ]
             }
         ],
         "final_checkpoint": {
-            "steps": 9289,
-            "file_path": "results\\run1\\My Behavior.onnx",
-            "reward": -0.9895104895104895,
-            "creation_time": 1631291216.8560586,
+            "steps": 592,
+            "file_path": "results\\run1\\My Behavior_A.onnx",
+            "reward": -0.08163265306122448,
+            "creation_time": 1632211810.2532926,
             "auxillary_file_paths": [
-                "results\\run1\\My Behavior\\My Behavior-9289.pt"
+                "results\\run1\\My Behavior_A\\My Behavior_A-592.pt"
+            ]
+        }
+    },
+    "My Behavior_B": {
+        "checkpoints": [
+            {
+                "steps": 592,
+                "file_path": "results\\run1\\My Behavior_B\\My Behavior_B-592.onnx",
+                "reward": -0.4897959183673469,
+                "creation_time": 1632211810.3313835,
+                "auxillary_file_paths": [
+                    "results\\run1\\My Behavior_B\\My Behavior_B-592.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 592,
+            "file_path": "results\\run1\\My Behavior_B.onnx",
+            "reward": -0.4897959183673469,
+            "creation_time": 1632211810.3313835,
+            "auxillary_file_paths": [
+                "results\\run1\\My Behavior_B\\My Behavior_B-592.pt"
             ]
         }
     },

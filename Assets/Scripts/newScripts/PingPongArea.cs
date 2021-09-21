@@ -34,13 +34,13 @@ public class PingPongArea : MonoBehaviour
         {
             rule.log.turn = 2;
             //ballRb.velocity = Convert_x * new Vector3(Random.Range(-2F, 2F), Random.Range(-2F, 2F), Random.Range(-6F, -2F));
-            ballRb.velocity = Convert_x * new Vector3(0F, 0F, -4F);
+            ballRb.velocity = Convert_x * new Vector3(4F, 0F, 0F);
         }
         else
         {
             rule.log.turn = 1;
             //ballRb.velocity = Convert_x * new Vector3(Random.Range(-2F, 2F), Random.Range(-2F, 2F), Random.Range(2F, 6F));
-            ballRb.velocity = Convert_x * new Vector3(0F, 0F, 4F);
+            ballRb.velocity = Convert_x * new Vector3(-4F, 0F, 0F);
         }
     }
 }
