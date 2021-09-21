@@ -103,7 +103,7 @@ public class DeltaAgent1 : Agent
         //Agent & opponent racket position & velocity
 
         //ball position & velocity
-        Vector3 ball_pos = _ballRb.position - myArea.transform.position;
+        Vector3 ball_pos = _ballRb.position - gameObject.transform.position;
         ball_pos = Convert_x * ball_pos;
         Vector3 ball_vel = Convert_x * _ballRb.velocity;
         Vector3 ball_rotvel = Convert_w * _ballRb.angularVelocity;
