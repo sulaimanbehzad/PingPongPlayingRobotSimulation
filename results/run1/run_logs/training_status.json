@@ -1,4 +1,48 @@
 {
+    "My Behavior_A": {
+        "checkpoints": [
+            {
+                "steps": 592,
+                "file_path": "results\\run1\\My Behavior_A\\My Behavior_A-592.onnx",
+                "reward": -0.08163265306122448,
+                "creation_time": 1632211810.2532926,
+                "auxillary_file_paths": [
+                    "results\\run1\\My Behavior_A\\My Behavior_A-592.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 592,
+            "file_path": "results\\run1\\My Behavior_A.onnx",
+            "reward": -0.08163265306122448,
+            "creation_time": 1632211810.2532926,
+            "auxillary_file_paths": [
+                "results\\run1\\My Behavior_A\\My Behavior_A-592.pt"
+            ]
+        }
+    },
+    "My Behavior_B": {
+        "checkpoints": [
+            {
+                "steps": 592,
+                "file_path": "results\\run1\\My Behavior_B\\My Behavior_B-592.onnx",
+                "reward": -0.4897959183673469,
+                "creation_time": 1632211810.3313835,
+                "auxillary_file_paths": [
+                    "results\\run1\\My Behavior_B\\My Behavior_B-592.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 592,
+            "file_path": "results\\run1\\My Behavior_B.onnx",
+            "reward": -0.4897959183673469,
+            "creation_time": 1632211810.3313835,
+            "auxillary_file_paths": [
+                "results\\run1\\My Behavior_B\\My Behavior_B-592.pt"
+            ]
+        }
+    },
     "metadata": {
         "stats_format_version": "0.3.0",
         "mlagents_version": "0.27.0",
