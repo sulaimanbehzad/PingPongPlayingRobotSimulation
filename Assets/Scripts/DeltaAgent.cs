@@ -95,9 +95,9 @@ public class DeltaAgent : Agent
     {
 
         // get ball position and rotation values
-        sensor.AddObservation(ball.transform.rotation.x);
-        sensor.AddObservation(ball.transform.rotation.y);
-        sensor.AddObservation(ball.transform.rotation.z);
+        // sensor.AddObservation(ball.transform.rotation.x);
+        // sensor.AddObservation(ball.transform.rotation.y);
+        // sensor.AddObservation(ball.transform.rotation.z);
         
         sensor.AddObservation(ball.transform.position.x);
         sensor.AddObservation(ball.transform.position.y);
@@ -178,12 +178,18 @@ public class DeltaAgent : Agent
         {
             Debug.Log("Racket");
             SetReward(1f);
-            EndEpisode();
+            // EndEpisode();
+        // else if (other.collider.tag == "")
         }
-        else if (other.collider.tag == "floor")
+        else
+        {
+            Debug.Log("other");
+            SetReward(0f);
+        }
+        if (other.collider.tag == "floor")
         {
             Debug.Log("Floor");
-            SetReward(-1f);
+            // SetReward(-1f);
             EndEpisode();
         }
         // else
