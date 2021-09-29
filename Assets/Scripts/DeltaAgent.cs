@@ -63,7 +63,7 @@ public class DeltaAgent : Agent
    
         // _ballRb.velocity = new Vector3(0f, 0f, 0f);
         // ball.transform.position = new Vector3(Random.Range(-1.5f, 1.5f), 4f, Random.Range(-1.5f, 1.5f)) + gameObject.transform.position;
-        Vector3 randVect = new Vector3(UnityEngine.Random.Range(-1.5f, -0.9f), UnityEngine.Random.Range(2f,2.13f), UnityEngine.Random.Range(0f, 0.87f));
+        Vector3 randVect = new Vector3(UnityEngine.Random.Range(-1.5f, -1.2f), UnityEngine.Random.Range(1.3f,1.45f), UnityEngine.Random.Range(-0.6f, 0.6f));
         ball.transform.position = randVect;
         Vector3 direction = new Vector3(1, 0f, 0f);
         _ballRb.AddForce(direction * ball_force_coef, ForceMode.Impulse);
@@ -139,13 +139,13 @@ public class DeltaAgent : Agent
         // sl3_tr.eulerAngles = new Vector3(0,-62f,actionSl3);
         if (use_torque)
         {
-            var actionSl1 = changeScale(actions.ContinuousActions[++i], -1f, 1f, 0, 2);
-            var actionSl2 = changeScale(actions.ContinuousActions[++i], -1f, 1f, 0, 2);
-            var actionSl3 = changeScale(actions.ContinuousActions[++i], -1f, 1f, 0, 2);
+            // var actionSl1 = changeScale(actions.ContinuousActions[++i], -1f, 1f, 0, 2);
+            // var actionSl2 = changeScale(actions.ContinuousActions[++i], -1f, 1f, 0, 2);
+            // var actionSl3 = changeScale(actions.ContinuousActions[++i], -1f, 1f, 0, 2);
 
-            sl1_rb.AddTorque(new Vector3(0, 0, actionSl1), ForceMode.Force);
-            sl2_rb.AddTorque(new Vector3(0, 0, actionSl2), ForceMode.Force);
-            sl3_rb.AddTorque(new Vector3(0, 0, actionSl3), ForceMode.Force);
+            sl1_rb.AddTorque(new Vector3(0, 0, actions.ContinuousActions[++i]), ForceMode.Force);
+            sl2_rb.AddTorque(new Vector3(0, 0, actions.ContinuousActions[++i]), ForceMode.Force);
+            sl3_rb.AddTorque(new Vector3(0, 0, actions.ContinuousActions[++i]), ForceMode.Force);
         }
         else {
             var actionSl1 = changeScale(actions.ContinuousActions[++i], -1f, 1f, -60, 90);
