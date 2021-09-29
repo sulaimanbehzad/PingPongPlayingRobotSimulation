@@ -172,31 +172,7 @@ public class DeltaAgent : Agent
         // }
     }
 
-    private void OnCollisionEnter(Collision other)
-    {
-        if (other.collider.tag == "racket")
-        {
-            Debug.Log("Racket");
-            SetReward(1f);
-            // EndEpisode();
-        // else if (other.collider.tag == "")
-        }
-        else
-        {
-            Debug.Log("other");
-            SetReward(0f);
-        }
-        if (other.collider.tag == "floor")
-        {
-            Debug.Log("Floor");
-            // SetReward(-1f);
-            EndEpisode();
-        }
-        // else
-        // {
-        //     SetReward(-0.1f);
-        // }
-    }
+
     /*
      * at the Behavior Parameters on the Agent 
      * �Behaviour Type� has three options, �Heuristic Only�, �default�, and �Inference Only�
@@ -221,8 +197,8 @@ public class DeltaAgent : Agent
      */
     void ResetScene()
     {
-        _ballRb.mass = defaultParameters.GetWithDefault("mass", 1.0f);
-        var scale = defaultParameters.GetWithDefault("scale", 1.0f);
+        _ballRb.mass = defaultParameters.GetWithDefault("mass", 0.0027f);
+        var scale = defaultParameters.GetWithDefault("scale", 0.04f);
         ball.transform.localScale = new Vector3(scale, scale, scale);
         Debug.Log("end reset scene");
     }
