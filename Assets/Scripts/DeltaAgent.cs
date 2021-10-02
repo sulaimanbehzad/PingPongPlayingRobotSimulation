@@ -32,7 +32,8 @@ public class DeltaAgent : Agent
     public Transform racket;
     public bool use_torque;
     public float ball_force_coef;
-    private int i_cnt = 0;
+    private int cnt_eps = 0;
+    private int cnt_frame = 0;
     public override void Initialize()
     {
         _ballRb = ball.GetComponent<Rigidbody>();
@@ -67,8 +68,8 @@ public class DeltaAgent : Agent
         ball.transform.position = randVect;
         Vector3 direction = new Vector3(1, 0f, 0f);
         _ballRb.AddForce(direction * ball_force_coef, ForceMode.Impulse);
-        i_cnt++;
-        Debug.Log(i_cnt.ToString());
+        cnt_eps++;
+        Debug.Log("Episode number: " + cnt_eps.ToString());
         ResetScene();
           
     }
@@ -200,8 +201,12 @@ public class DeltaAgent : Agent
         _ballRb.mass = defaultParameters.GetWithDefault("mass", 0.0027f);
         var scale = defaultParameters.GetWithDefault("scale", 0.04f);
         ball.transform.localScale = new Vector3(scale, scale, scale);
-        Debug.Log("end reset scene");
+        // Debug.Log("end reset scene");
     }
 
-    
+    private void FixedUpdate()
+    {
+        cnt_frame++;
+        Debug.Log("Number of frames: " + cnt_frame.ToString());
+    }
 }
