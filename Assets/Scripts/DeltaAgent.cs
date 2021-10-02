@@ -36,6 +36,7 @@ public class DeltaAgent : Agent
     private int cnt_frame = 0;
     public override void Initialize()
     {
+        Debug.Log("delta time: " + Time.fixedDeltaTime);
         _ballRb = ball.GetComponent<Rigidbody>();
         sl1_rb = sl1.GetComponent<Rigidbody>();
         sl2_rb = sl2.GetComponent<Rigidbody>();
@@ -153,9 +154,9 @@ public class DeltaAgent : Agent
             var actionSl2 = changeScale(actions.ContinuousActions[++i], -1f, 1f, -60, 90);
             var actionSl3 = changeScale(actions.ContinuousActions[++i], -1f, 1f, -60, 90);
             
-            sl1_tr.eulerAngles = new Vector3(0,180,actionSl1);
-            sl2_tr.eulerAngles = new Vector3(0,60f,actionSl2);
-            sl3_tr.eulerAngles = new Vector3(0,-62f,actionSl3);
+            sl1_tr.eulerAngles = new Vector3(0,180,actionSl1 * Time.fixedDeltaTime);
+            sl2_tr.eulerAngles = new Vector3(0,60f,actionSl2 * Time.fixedDeltaTime);
+            sl3_tr.eulerAngles = new Vector3(0,-62f,actionSl3 * Time.fixedDeltaTime);
         }
 
         // // TODO: set reward
