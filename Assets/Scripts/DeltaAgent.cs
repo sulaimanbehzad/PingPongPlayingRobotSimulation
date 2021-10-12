@@ -21,6 +21,7 @@ public class DeltaAgent : Agent
     public GameObject sl1;
     public GameObject sl2;
     public GameObject sl3;
+    public Transform table;
 
     private Rigidbody sl1_rb;
     private Rigidbody sl2_rb;
@@ -32,8 +33,17 @@ public class DeltaAgent : Agent
     public Transform racket;
     public bool use_torque;
     public float ball_force_coef;
-    private int cnt_eps = 0;
-    private int cnt_frame = 0;
+    private static int cnt_eps = 0;
+    private static int cnt_frame = 0;
+
+    public int get_episode(){
+        return cnt_eps;
+    }
+
+    public int get_frame(){
+        return cnt_frame;
+    }
+
     public override void Initialize()
     {
         Debug.Log("delta time: " + Time.fixedDeltaTime);
@@ -63,14 +73,19 @@ public class DeltaAgent : Agent
         // slGameObject3.transform.rotation = new Quaternion(0f, -62f, 0f, 0f);
         sl3_tr.eulerAngles = new Vector3(0, -62, 0f);
    
+        
         // _ballRb.velocity = new Vector3(0f, 0f, 0f);
         // ball.transform.position = new Vector3(Random.Range(-1.5f, 1.5f), 4f, Random.Range(-1.5f, 1.5f)) + gameObject.transform.position;
-        Vector3 randVect = new Vector3(UnityEngine.Random.Range(-1.5f, -1.2f), UnityEngine.Random.Range(1.3f,1.45f), UnityEngine.Random.Range(-0.6f, 0.6f));
+        Vector3 randVect = new Vector3(UnityEngine.Random.Range(-1.5f, -1.2f), UnityEngine.Random.Range(1.1f,1.3f), UnityEngine.Random.Range(-0.6f, 0.6f));
+        // randVect += table.transform.position;
+        // Debug.Log(randVect);
         ball.transform.position = randVect;
-        Vector3 direction = new Vector3(1, 0f, 0f);
-        _ballRb.AddForce(direction * ball_force_coef, ForceMode.Impulse);
+        Vector3 direction = new Vector3(1, -0.1f, 0f);
+        ball_force_coef = Random.Range(7, 10);
+        _ballRb.velocity = new Vector3(ball_force_coef, 0, 0); 
+        // _ballRb.AddForce(direction * ball_force_coef, ForceMode.Impulse);
         cnt_eps++;
-        Debug.Log("Episode number: " + cnt_eps.ToString());
+        // Debug.Log("Episode number: " + cnt_eps.ToString());
         ResetScene();
           
     }
@@ -100,15 +115,21 @@ public class DeltaAgent : Agent
         // sensor.AddObservation(ball.transform.rotation.x);
         // sensor.AddObservation(ball.transform.rotation.y);
         // sensor.AddObservation(ball.transform.rotation.z);
-        
-        sensor.AddObservation(ball.transform.position.x);
-        sensor.AddObservation(ball.transform.position.y);
-        sensor.AddObservation(ball.transform.position.z);
+        // Vector3 refVec = new Vector3;
+        // refVec = table.transform.position + ball.transform.position;
+        sensor.AddObservation(changeScale(ball.transform.position.x, -2f, 2f, 0f, 1f));
+        sensor.AddObservation(changeScale(ball.transform.position.y, -2f, 2f, 0f, 1f));
+        sensor.AddObservation(changeScale(ball.transform.position.z, -2f, 2f, 0f, 1f));
+        // Debug.Log(ball.transform.position);
         
         // get robot servo motors angles
-        sensor.AddObservation(sl1_tr.rotation.z);
-        sensor.AddObservation(sl2_tr.rotation.z);
-        sensor.AddObservation(sl3_tr.rotation.z);
+        sensor.AddObservation(changeScale(sl1_tr.rotation.z, -60f, 90f, 0f, 1f));
+        sensor.AddObservation(changeScale(sl2_tr.rotation.z, -60f, 90f, 0f, 1f));
+        sensor.AddObservation(changeScale(sl3_tr.rotation.z, -60f, 90f, 0f, 1f));
+
+        sensor.AddObservation(changeScale(racket.transform.position.x, -2f, 2f, 0f, 1f));
+        sensor.AddObservation(changeScale(racket.transform.position.y, -2f, 2f, 0f, 1f));
+        sensor.AddObservation(changeScale(racket.transform.position.z, -2f, 2f, 0f, 1f));
 
         /*
          * sensor.AddObservation(ballRb.velocity);
@@ -154,9 +175,37 @@ public class DeltaAgent : Agent
             var actionSl2 = changeScale(actions.ContinuousActions[++i], -1f, 1f, -60, 90);
             var actionSl3 = changeScale(actions.ContinuousActions[++i], -1f, 1f, -60, 90);
             
-            sl1_tr.eulerAngles = new Vector3(0,180,actionSl1 * Time.fixedDeltaTime);
-            sl2_tr.eulerAngles = new Vector3(0,60f,actionSl2 * Time.fixedDeltaTime);
-            sl3_tr.eulerAngles = new Vector3(0,-62f,actionSl3 * Time.fixedDeltaTime);
+            // var actionSl1 = actions.ContinuousActions[++i];
+            // var actionSl2 = actions.ContinuousActions[++i];
+            // var actionSl3 = actions.ContinuousActions[++i];
+
+            // if(actionSl1 > 0 ){
+            //     sl1_tr.transform.Rotate(new Vector3(0,0,5));// * Time.fixedDeltaTime;
+            // }
+            // else if (actionSl1 < 0){
+            //     sl1_tr.transform.Rotate(new Vector3(0,0,-5));// * Time.fixedDeltaTime;
+            // }
+
+            // if(actionSl2 > 0 ){
+            //     sl2_tr.transform.Rotate(new Vector3(0,0,5));
+            // }
+            // else if (actionSl2 < 0){
+            //     sl2_tr.transform.Rotate(new Vector3(0,0,-5));
+            // }
+
+            // if(actionSl3 > 0 ){
+            //     sl3_tr.transform.Rotate(new Vector3(0,0,5));
+            // }
+            // else if (actionSl3 < 0){
+            //     sl3_tr.transform.Rotate(new Vector3(0,0,-5));
+            // }
+            sl1_tr.transform.Rotate(new Vector3(0,0,actionSl1) * Time.fixedDeltaTime);
+            sl2_tr.transform.Rotate(new Vector3(0,0,actionSl2) * Time.fixedDeltaTime);
+            sl3_tr.transform.Rotate(new Vector3(0,0,actionSl3) * Time.fixedDeltaTime);
+
+            // sl1_tr.eulerAngles = new Vector3(0,0,actionSl1);// * Time.fixedDeltaTime;
+            // sl2_tr.eulerAngles = new Vector3(0,0,actionSl2);// * Time.fixedDeltaTime;
+            // sl3_tr.eulerAngles = new Vector3(0,0,actionSl3);// * Time.fixedDeltaTime;
         }
 
         // // TODO: set reward
@@ -208,6 +257,6 @@ public class DeltaAgent : Agent
     private void FixedUpdate()
     {
         cnt_frame++;
-        Debug.Log("Number of frames: " + cnt_frame.ToString());
+        // Debug.Log("Number of frames: " + cnt_frame.ToString());
     }
 }

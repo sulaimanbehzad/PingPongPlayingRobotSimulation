@@ -3,17 +3,17 @@ behaviors:
   My Behavior:
     trainer_type: ppo
     hyperparameters:
-      batch_size: 1024
-      buffer_size: 10240
-      learning_rate: 0.0003
-      beta: 0.005
+      batch_size: 128
+      buffer_size: 500000
+      learning_rate: 1.0e-05
+      beta: 0.001
       epsilon: 0.2
-      lambd: 0.95
+      lambd: 0.99
       num_epoch: 3
       learning_rate_schedule: linear
     network_settings:
       normalize: false
-      hidden_units: 128
+      hidden_units: 1024
       num_layers: 2
       vis_encode_type: simple
       memory: null
@@ -24,7 +24,7 @@ behaviors:
         strength: 1.0
         network_settings:
           normalize: false
-          hidden_units: 128
+          hidden_units: 512
           num_layers: 2
           vis_encode_type: simple
           memory: null
@@ -32,7 +32,7 @@ behaviors:
     init_path: null
     keep_checkpoints: 5
     checkpoint_interval: 500000
-    max_steps: 500000
+    max_steps: 50000000
     time_horizon: 64
     summary_freq: 50000
     threaded: false
@@ -48,7 +48,7 @@ engine_settings:
   width: 84
   height: 84
   quality_level: 5
-  time_scale: 20
+  time_scale: 20.0
   target_frame_rate: -1
   capture_frame_rate: 60
   no_graphics: false
@@ -58,7 +58,7 @@ checkpoint_settings:
   initialize_from: null
   load_model: false
   resume: false
-  force: false
+  force: true
   train_model: false
   inference: false
   results_dir: results
