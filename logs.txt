@@ -1,0 +1,24 @@
+run1	:
+run2	:
+run3	:	change reward to 1, 
+			change result dialog to won rate, 
+			rescale actions to [-60, 90], 
+			change action to racket position,
+			change reward	: 	first hit =>1
+								other_hits => 1
+								collide to table => 0
+								o.w. => 0
+			ball bounce is set to maximum value. change the initial position and direction of the ball.
+			
+run4	:	is run 3, only action is changed to eular Angels.
+			clamp actions to [-1, 1]
+			rescale the action to [-60, 90]
+			
+run5	:	clamp action to [-1,1]
+
+run6	:	remove Delta
+			fix racket rotation
+			action by racket position
+			observation	:	racket position and ball position
+			
+			

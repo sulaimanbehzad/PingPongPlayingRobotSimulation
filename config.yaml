@@ -4,8 +4,8 @@ behaviors:
     trainer_type: ppo
     hyperparameters:
       batch_size: 128
-      buffer_size: 500000
-      learning_rate: 0.00001
+      buffer_size: 50000
+      learning_rate: 0.0001
       beta: 0.001
       epsilon: 0.2
       lambd: 0.99
@@ -13,8 +13,8 @@ behaviors:
       learning_rate_schedule: linear
     network_settings:
       normalize: false
-      hidden_units: 1024
-      num_layers: 2
+      hidden_units: 8
+      num_layers: 3
       vis_encode_type: simple
       memory: null
       goal_conditioning_type: hyper
@@ -24,7 +24,7 @@ behaviors:
         strength: 1.0
         network_settings:
           normalize: false
-          hidden_units: 512
+          hidden_units: 128
           num_layers: 2
           vis_encode_type: simple
           memory: null
@@ -32,10 +32,10 @@ behaviors:
     init_path: null
     keep_checkpoints: 5
     checkpoint_interval: 500000
-    max_steps: 50000000
-    time_horizon: 64
-    summary_freq: 50000
-    threaded: false
+    max_steps: 5000000
+    time_horizon: 128
+    summary_freq: 5000
+    threaded: true
     self_play: null
     behavioral_cloning: null
 env_settings:
@@ -54,7 +54,7 @@ engine_settings:
   no_graphics: false
 environment_parameters: null
 checkpoint_settings:
-  run_id: run1
+  run_id: run4
   initialize_from: null
   load_model: false
   resume: false

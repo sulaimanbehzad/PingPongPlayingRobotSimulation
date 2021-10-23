@@ -5,7 +5,7 @@ using UnityEngine;
 public class BallRL : MonoBehaviour
 {
     // public GameObject myArea;
-    public DeltaAgent agent_A;
+    public RacketAgent agent_A;
     // PingPongArea area;
     private static int cnt_win = 0;
     // Start is called before the first frame update
@@ -23,7 +23,7 @@ public class BallRL : MonoBehaviour
             // Debug.Log("Racket");
             cnt_win++;
             // Debug.Log("Episodes won: " + cnt_win.ToString());
-            agent_A.SetReward(10f);
+            agent_A.SetReward(1f);
         }
         else
         {
