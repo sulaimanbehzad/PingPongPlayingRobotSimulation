@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BallRL : MonoBehaviour
 {
+    public GameObject canvasText;
     // public GameObject myArea;
     public RacketAgent agent_A;
     // PingPongArea area;
@@ -32,7 +34,11 @@ public class BallRL : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("floor")  || collision.gameObject.CompareTag("wall"))
         {
-            Debug.Log("Total Frame:" + agent_A.get_frame() + "\t Total Episode: " + agent_A.get_episode() + "\t Total Won:" + cnt_win);
+            
+            string logText = "Total Frame:" + agent_A.get_frame().ToString() + "\t Total Episode: " + agent_A.get_episode().ToString() + "\t Total Won:" +
+                             cnt_win.ToString();
+            Debug.Log(logText);
+            canvasText.GetComponent<Text>().text = logText;
             agent_A.EndEpisode();
         }
     }
