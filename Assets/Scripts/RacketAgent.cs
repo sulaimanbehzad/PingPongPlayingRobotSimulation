@@ -98,13 +98,21 @@ public class RacketAgent : Agent
         // sensor.AddObservation(ball.transform.rotation.z);
         // Vector3 refVec = new Vector3;
         // refVec = table.transform.position + ball.transform.position;
-        sensor.AddObservation(changeScale(ball.transform.position.x, -2f, 2f, 0f, 1f));
-        sensor.AddObservation(changeScale(ball.transform.position.y, -2f, 2f, 0f, 1f));
-        sensor.AddObservation(changeScale(ball.transform.position.z, -2f, 2f, 0f, 1f));
-        // Debug.Log(ball.transform.position);
-        sensor.AddObservation(changeScale(racket.position.x, -2f, 2f, 0f, 1f));
-        sensor.AddObservation(changeScale(racket.position.y, -2f, 2f, 0f, 1f));
-        sensor.AddObservation(changeScale(racket.position.z, -2f, 2f, 0f, 1f));
+        // sensor.AddObservation(changeScale(ball.transform.position.x, -2f, 2f, 0f, 1f));
+        // sensor.AddObservation(changeScale(ball.transform.position.y, -2f, 2f, 0f, 1f));
+        // sensor.AddObservation(changeScale(ball.transform.position.z, -2f, 2f, 0f, 1f));
+
+        // sensor.AddObservation(changeScale(racket.position.x, -2f, 2f, 0f, 1f));
+        // sensor.AddObservation(changeScale(racket.position.y, -2f, 2f, 0f, 1f));
+        // sensor.AddObservation(changeScale(racket.position.z, -2f, 2f, 0f, 1f));
+
+        sensor.AddObservation(ball.transform.position.x);
+        sensor.AddObservation(ball.transform.position.y);
+        sensor.AddObservation(ball.transform.position.z);
+
+        sensor.AddObservation(racket.position.x);
+        sensor.AddObservation(racket.position.y);
+        sensor.AddObservation(racket.position.z);
 
         /*
          * sensor.AddObservation(ballRb.velocity);
@@ -127,7 +135,7 @@ public class RacketAgent : Agent
         var X = racket.position.x + Mathf.Clamp(actions.ContinuousActions[0], -1f, 1f) / 20f;
         var Y = racket.position.y + Mathf.Clamp(actions.ContinuousActions[1], -1f, 1f) / 20f;
         var Z = racket.position.z + Mathf.Clamp(actions.ContinuousActions[2], -1f, 1f) / 20f;
-        Debug.Log(Mathf.Clamp(actions.ContinuousActions[0], -1f, 1f));
+        // Debug.Log(Mathf.Clamp(actions.ContinuousActions[0], -1f, 1f));
         if (X > min_X && X < max_X) {
             racket.position = new Vector3(X,racket.position.y, racket.position.z);
         }
