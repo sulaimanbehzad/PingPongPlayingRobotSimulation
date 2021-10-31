@@ -8,7 +8,7 @@ public class BallRL : MonoBehaviour
     public GameObject canvasText;
     // public GameObject myArea;
     public RacketAgent agent_A;
-    // PingPongArea area;
+    public ChangeColorOnContact changecolorclass;
     private static int cnt_win = 0;
     // Start is called before the first frame update
     void Start()
@@ -22,10 +22,18 @@ public class BallRL : MonoBehaviour
         // Debug.Log("Collided with: " + collision.gameObject.name);
         if (collision.gameObject.CompareTag("racket_A"))
         {
-            // Debug.Log("Racket");
             cnt_win++;
-            // Debug.Log("Episodes won: " + cnt_win.ToString());
             agent_A.SetReward(1f);
+            // if(!agent_A.get_first_hit()){
+            //     // Debug.Log("Racket");
+            //     cnt_win++;
+            //     // Debug.Log("Episodes won: " + cnt_win.ToString());
+            //     agent_A.SetReward(1f);
+            //     agent_A.set_first_hit(false);
+            // }
+        }
+        else if(collision.gameObject.CompareTag("court_B")){
+            agent_A.SetReward(5f);
         }
         else
         {
@@ -36,7 +44,7 @@ public class BallRL : MonoBehaviour
         {
             
             string logText = "Total Frame:" + agent_A.get_frame().ToString() + "\t Total Episode: " + agent_A.get_episode().ToString() + "\t Total Won:" +
-                             cnt_win.ToString();
+                             cnt_win.ToString() +"\t Total Oponnent Court: " + changecolorclass.get_cnt_opp_court();
             Debug.Log(logText);
             canvasText.GetComponent<Text>().text = logText;
             agent_A.EndEpisode();

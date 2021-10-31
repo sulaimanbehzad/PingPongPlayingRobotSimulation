@@ -11,6 +11,10 @@ public class RacketAgent : Agent
 {
     public GameObject ball;
     private Rigidbody _ballRb;
+    public Material colMaterial;
+    private MeshRenderer colMeshRenderer;
+    public ChangeColorOnContact changecolorclass;
+
 
     /*
      * for accessing a data set on the Academy called �EnvironmentParameters.� 
@@ -21,6 +25,7 @@ public class RacketAgent : Agent
     public Transform table;
 
     public Transform racket;
+    
     public bool use_torque;
     public float ball_force_coef;
     private static int cnt_eps = 0;
@@ -32,6 +37,14 @@ public class RacketAgent : Agent
     private float max_Z = 0.766f;
     private float min_Z = -0.766f;
     
+    private bool first_hit;
+
+    public bool get_first_hit() {
+        return first_hit;
+    }
+    public void set_first_hit(bool fh) {
+        this.first_hit = fh;
+    }
 
     public int get_episode(){
         return cnt_eps;
@@ -52,6 +65,8 @@ public class RacketAgent : Agent
     //this function resets the position and velocity of the ball, the rotation of the agent, 
     public override void OnEpisodeBegin()
     {
+        colMeshRenderer = ball.GetComponent<MeshRenderer>();
+        colMeshRenderer.material = colMaterial;
         racket.position = new Vector3(1.35f,0.94f,0f);
         racket.eulerAngles = new Vector3(0f,0f,0f);
    
@@ -67,6 +82,8 @@ public class RacketAgent : Agent
         // _ballRb.AddForce(direction * ball_force_coef, ForceMode.Impulse);
         cnt_eps++;
         // Debug.Log("Episode number: " + cnt_eps.ToString());
+        set_first_hit(false);
+        changecolorclass.set_ball_collision(false);
         ResetScene();
           
     }
@@ -147,6 +164,7 @@ public class RacketAgent : Agent
             racket.position = new Vector3(racket.position.x, racket.position.y, Z);
 
         }
+        // ball.transform.position = new Vector3(-1.21200001f,0.764999986f,0f);
         // racket.position = Vector3.MoveTowards(racket.position, new Vector3(X,Y,Z), Time.fixedDeltaTime * 10);
         // Debug.Log(actions.ContinuousActions[0] + "    "+ actions.ContinuousActions[1]+ "    " +actions.ContinuousActions[2]);
         // Debug.Log(X + "    "+ Y+ "    " + Z);
