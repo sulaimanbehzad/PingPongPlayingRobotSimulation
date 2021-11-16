@@ -22,8 +22,12 @@ public class BallRL : MonoBehaviour
         // Debug.Log("Collided with: " + collision.gameObject.name);
         if (collision.gameObject.CompareTag("racket_A"))
         {
-            cnt_win++;
-            agent_A.SetReward(1f);
+            agent_A.SetReward(10f);
+            if(!agent_A.get_first_hit()){
+                cnt_win++;
+                
+                agent_A.set_first_hit(true);
+            }
             // if(!agent_A.get_first_hit()){
             //     // Debug.Log("Racket");
             //     cnt_win++;
@@ -33,7 +37,7 @@ public class BallRL : MonoBehaviour
             // }
         }
         else if(collision.gameObject.CompareTag("court_B")){
-            agent_A.SetReward(5f);
+            agent_A.SetReward(10f);
         }
         else
         {

@@ -36,6 +36,10 @@ public class RacketAgent : Agent
     private float min_Y = 0.884f;
     private float max_Z = 0.766f;
     private float min_Z = -0.766f;
+
+    private float pre_X_position = 0f;
+    private float pre_Y_position = 0f;
+    private float pre_Z_position = 0f;
     
     private bool first_hit;
 
@@ -68,7 +72,7 @@ public class RacketAgent : Agent
         colMeshRenderer = ball.GetComponent<MeshRenderer>();
         colMeshRenderer.material = colMaterial;
         racket.position = new Vector3(1.35f,0.94f,0f);
-        racket.eulerAngles = new Vector3(0f,0f,0f);
+        racket.eulerAngles = new Vector3(0f,90f,90f);
    
         // _ballRb.velocity = new Vector3(0f, 0f, 0f);
         // ball.transform.position = new Vector3(Random.Range(-1.5f, 1.5f), 4f, Random.Range(-1.5f, 1.5f)) + gameObject.transform.position;
@@ -76,6 +80,12 @@ public class RacketAgent : Agent
         // randVect += table.transform.position;
         // Debug.Log(randVect);
         ball.transform.position = randVect;
+
+        pre_X_position = ball.transform.position.x;
+        pre_Y_position = ball.transform.position.y;
+        pre_Z_position = ball.transform.position.z;
+
+
         Vector3 direction = new Vector3(1, -0.1f, 0f);
         ball_force_coef = Random.Range(7, 10);
         _ballRb.velocity = new Vector3(ball_force_coef, 0, 0); 
@@ -127,9 +137,32 @@ public class RacketAgent : Agent
         sensor.AddObservation(ball.transform.position.y);
         sensor.AddObservation(ball.transform.position.z);
 
+        sensor.AddObservation(ball.transform.rotation.x);
+        sensor.AddObservation(ball.transform.rotation.y);
+        sensor.AddObservation(ball.transform.rotation.z);
+
+        float ball_x_valocity = (ball.transform.position.x - pre_X_position) / Time.fixedDeltaTime;
+        float ball_y_valocity = (ball.transform.position.y - pre_Y_position) / Time.fixedDeltaTime;
+        float ball_z_valocity = (ball.transform.position.z - pre_Z_position) / Time.fixedDeltaTime;
+
+        pre_X_position = ball.transform.position.x;
+        pre_Y_position = ball.transform.position.y;
+        pre_Z_position = ball.transform.position.z;
+
+        sensor.AddObservation(ball_x_valocity);
+        sensor.AddObservation(ball_y_valocity);
+        sensor.AddObservation(ball_z_valocity);
+
         sensor.AddObservation(racket.position.x);
         sensor.AddObservation(racket.position.y);
         sensor.AddObservation(racket.position.z);
+
+        // sensor.AddObservation(racket.velocity.x);
+        // sensor.AddObservation(racket.velocity.y);
+        // sensor.AddObservation(racket.velocity.z);
+
+        sensor.AddObservation(racket.rotation.y);
+        sensor.AddObservation(racket.rotation.z);
 
         /*
          * sensor.AddObservation(ballRb.velocity);
@@ -164,11 +197,11 @@ public class RacketAgent : Agent
             racket.position = new Vector3(racket.position.x, racket.position.y, Z);
 
         }
-        // ball.transform.position = new Vector3(-1.21200001f,0.764999986f,0f);
-        // racket.position = Vector3.MoveTowards(racket.position, new Vector3(X,Y,Z), Time.fixedDeltaTime * 10);
-        // Debug.Log(actions.ContinuousActions[0] + "    "+ actions.ContinuousActions[1]+ "    " +actions.ContinuousActions[2]);
-        // Debug.Log(X + "    "+ Y+ "    " + Z);
         
+        var rotationY = Mathf.Clamp(actions.ContinuousActions[3],-1f,1f) * 30f;
+        var rotationZ = Mathf.Clamp(actions.ContinuousActions[3],-1f,1f) * 30f;
+
+        racket.eulerAngles = new Vector3(0,rotationY, rotationZ) + racket.eulerAngles;
 
     }
 
